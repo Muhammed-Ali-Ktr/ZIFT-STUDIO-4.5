@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="En güncel teknoloji haberleri, yazılım, tasarım, oyun incelemeleri ve daha fazlası">
+    <title>TeknoHaber - Teknolojinin Nabzı</title>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3840256145402837" crossorigin="anonymous"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #1e293b;
+            --text-secondary: #64748b;
+            --border: #e2e8f0;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --card-hover: #ffffff;
+        }
+
+        .dark-mode {
+            --bg: #0f172a;
+            --bg-secondary: #1e293b;
+            --text: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border: #334155;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --card-hover: #1e293b;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* Header */
+        header {
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .header-top {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary), #7c3aed);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .search-box {
+            flex: 1;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 3rem 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            background: var(--bg-secondary);
+            color: var(--text);
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .theme-toggle {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.25rem;
+        }
+
+        .theme-toggle:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.625rem 1.25rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-outline {
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .nav-menu::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-menu li a {
+            display: block;
+            padding: 1rem 1.25rem;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            white-space: nowrap;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .nav-menu li a:hover,
+        .nav-menu li a.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-bottom: 3rem;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            height: 500px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .hero:hover {
+            transform: scale(1.02);
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+        }
+
+        .hero-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 3rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            color: white;
+        }
+
+        .hero-category {
+            display: inline-block;
+            background: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-excerpt {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 700px;
+        }
+
+        /* Category Tabs */
+        .category-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--border);
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .category-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab {
+            padding: 1rem 1.5rem;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        /* News Grid */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .news-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .news-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px var(--shadow);
+            border-color: var(--primary);
+        }
+
+        .news-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .news-card:hover .news-image {
+            transform: scale(1.1);
+        }
+
+        .news-content {
+            padding: 1.5rem;
+        }
+
+        .news-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .news-category {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .news-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .news-excerpt {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .news-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .author {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .author-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        /* Popular Tags */
+        .popular-tags {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .tag {
+            padding: 0.5rem 1rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .tag:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            padding: 3rem 0 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-icon:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg);
+            padding: 2rem;
+            border-radius: 16px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg-secondary);
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-top {
+                flex-wrap: wrap;
+                padding: 1rem;
+            }
+
+            .search-box {
+                order: 3;
+                max-width: 100%;
+                flex: 1 1 100%;
+            }
+
+            .hero {
+                height: 400px;
+            }
+
+            .hero-content {
+                padding: 2rem;
+            }
+
+            .hero-title {
+                font-size: 1.75rem;
+            }
+
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading Animation */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .loading {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-top">
+            <a href="#" class="logo">
+                <div class="logo-icon">T</div>
+                TeknoHaber
+            </a>
+            
+            <div class="search-box">
+                <input type="search" placeholder="Haber, konu veya etiket ara...">
+                <span class="search-icon">🔍</span>
+            </div>
+            
+            <div class="header-actions">
+                <button class="theme-toggle" id="themeToggle" title="Tema Değiştir">🌙</button>
+                <div class="auth-buttons">
+                    <button class="btn btn-outline" onclick="openModal('login')">Giriş Yap</button>
+                    <button class="btn btn-primary" onclick="openModal('register')">Kayıt Ol</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <ul class="nav-menu">
+                <li><a href="#" class="active">Ana Sayfa</a></li>
+                <li><a href="#">Yazılım</a></li>
+                <li><a href="#">Tasarım</a></li>
+                <li><a href="#">Oyun</a></li>
+                <li><a href="#">Genel Haber</a></li>
+                <li><a href="#">İnceleme</a></li>
+                <li><a href="#">Video</a></li>
+                <li><a href="#">Duyurular</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero" onclick="alert('Haber detayına yönlendiriliyorsunuz...')">
+            <div class="hero-content">
+                <span class="hero-category">🚀 Yapay Zeka</span>
+                <h1 class="hero-title">Yeni Nesil Yapay Zeka Modelleri: Geleceğin Teknolojisi Bugün Başlıyor</h1>
+                <p class="hero-excerpt">En son AI teknolojileri ve makine öğrenimi algoritmalarıyla dijital dönüşümün öncüsü olun. İşte 2025'in en çarpıcı gelişmeleri...</p>
+            </div>
+        </div>
+
+        <!-- Category Tabs -->
+        <div class="category-tabs">
+            <button class="tab active">🔥 Öne Çıkanlar</button>
+            <button class="tab">💻 Yazılım</button>
+            <button class="tab">🎨 Tasarım</button>
+            <button class="tab">🎮 Oyun</button>
+            <button class="tab">📱 Mobil</button>
+        </div>
+
+        <!-- News Grid -->
+        <h2 class="section-title">📰 Yeni Gönderiler</h2>
+        <div class="news-grid">
+            <div class="news-card" data-page="news-python-3-13.html">
+                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=200&fit=crop" alt="Yazılım" class="news-image" loading="lazy">
+                <div class="news-content">
+                    <div class="news-meta">
+                        <span class="news-category">Yazılım</span>
+                        <span>2 saat önce</span>
+                    </div>
+                    <h3 class="news-title">Python 3.13'te Gelen Yenilikler ve Performans İyileştirmeleri</h3>
+                    <p class="news-excerpt">Python'ın en son sürümünde yer alan önemli güncellemeler ve geliştiriciler için getirdiği avantajlar...</p>
+                    <div class="news-footer">
+                        <div class="author">
+                            <div class="author-avatar">AY</div>
+                            <span>Ahmet Yılmaz</span>
+                        </div>
+                        <span>⏱️ 5 dk</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="news-card" data-page="news-figma-ui.html">
+                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=200&fit=crop" alt="Tasarım" class="news-image" loading="lazy">
+                <div class="news-content">
+                    <div class="news-meta">
+                        <span class="news-category">Tasarım</span>
+                        <span>5 saat önce</span>
+                    </div>
+                    <h3 class="news-title">Figma'da Modern UI Tasarımı: En İyi Pratikler ve İpuçları</h3>
+                    <p class="news-excerpt">2025'te kullanıcı deneyimini en üst düzeye çıkaracak Figma tasarım teknikleri ve ipuçları...</p>
+                    <div class="news-footer">
+                        <div class="author">
+                            <div class="author-avatar">ZK</div>
+                            <span>Zeynep Kaya</span>
+                        </div>
+                        <span>⏱️ 8 dk</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="news-card" data-page="news-unreal-5-5.html">
+                <img src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=400&h=200&fit=crop" alt="Oyun" class="news-image" loading="lazy">
+                <div class="news-content">
+                    <div class="news-meta">
+                        <span class="news-category">Oyun</span>
+                        <span>1 gün önce</span>
+                    </div>
+                    <h3 class="news-title">Unreal Engine 5.5 İncelemesi: Oyun Geliştirmenin Geleceği</h3>
+                    <p class="news-excerpt">Epic Games'in en yeni motor sürümünde yer alan devrim niteliğindeki özellikler ve performans...</p>
+                    <div class="news-footer">
+                        <div class="author">
+                            <div class="author-avatar">MÖ</div>
+                            <span>Mehmet Öztürk</span>
+                        </div>
+                        <span>⏱️ 12 dk</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="news-card" data-page="news-react-next.html">
+                <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&h=200&fit=crop" alt="Web" class="news-image" loading="lazy">
+                <div class="news-content">
+                    <div class="news-meta">
+                        <span class="news-category">Web</span>
+                        <span>2 gün önce</span>
+                    </div>
+                    <h3 class="news-title">React 19 ve Next.js 15: Modern Web Geliştirmenin Yeni Çağı</h3>
+                    <p class="news-excerpt">Server Components, Actions ve daha fazlasıyla web geliştirme deneyimini değiştiren özellikler...</p>
+                    <div class="news-footer">
+                        <div class="author">
+                            <div class="author-avatar">ED</div>
+                            <span>Elif Demir</span>
+                        </div>
+                        <span>⏱️ 10 dk</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="news-card" data-page="news-chatgpt-claude.html">
+                <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=200&fit=crop" alt="AI" class="news-image" loading="lazy">
+                <div class="news-content">
+                    <div class="news-meta">
+                        <span class="news-category">Yapay Zeka</span>
+                        <span>3 gün önce</span>
+                    </div>
+                    <h3 class="news-title">ChatGPT ve Claude: Dil Modellerinde Rekabet Kızışıyor</h3>
+                    <p class="news-excerpt">Büyük dil modellerinin son gelişmeleri ve AI asistanların günlük hayatımıza etkileri...</p>
+                    <div class="news-footer">
+                        <div class="author">
+                            <div class="author-avatar">BÇ</div>
+                            <span>Burak Çelik</span>
+                        </div>
+                        <span>⏱️ 7 dk</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="news-card" data-page="news-ios-android.html">
+                <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=200&fit=crop" alt="Mobil" class="news-image" loading="lazy">
+                <div class="news-content">
+                    <div class="news-meta">
+                        <span class="news-category">Mobil</span>
+                        <span>4 gün önce</span>
+                    </div>
+                    <h3 class="news-title">iOS 18 ve Android 15: Mobil İşletim Sistemlerinde Yenilikler</h3>
+                    <p class="news-excerpt">Akıllı telefonların geleceğini şekillendirecek özellikler ve kullanıcı deneyimi iyileştirmeleri...</p>
+                    <div class="news-footer">
+                        <div class="author">
+                            <div class="author-avatar">SA</div>
+                            <span>Selin Arslan</span>
+                        </div>
+                        <span>⏱️ 6 dk</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Popular Tags -->
+        <div class="popular-tags">
+            <h2 class="section-title">🏷️ Popüler Etiketler</h2>
+            <div class="tags-container">
+                <a href="#" class="tag">#Python</a>
+                <a href="#" class="tag">#JavaScript</a>
+                <a href="#" class="tag">#React</a>
+                <a href="#" class="tag">#Unity</a>
+                <a href="#" class="tag">#Blender</a>
+                <a href="#" class="tag">#AI</a>
+                <a href="#" class="tag">#MachineLearning</a>
+                <a href="#" class="tag">#WebDev</a>
+                <a href="#" class="tag">#Figma</a>
+                <a href="#" class="tag">#CSS</a>
+                <a href="#" class="tag">#Node.js</a>
+                <a href="#" class="tag">#Gaming</a>
+                <a href="#" class="tag">#UIDesign</a>
+                <a href="#" class="tag">#DevOps</a>
+                <a href="#" class="tag">#Cloud</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>TeknoHaber</h3>
+                <p style="color: var(--text-secondary); margin-top: 1rem;">Teknolojinin nabzını tutan, en güncel haberler ve derinlemesine analizlerle size ulaşıyoruz.</p>
+                <div class="social-icons">
+                    <a href="#" class="social-icon">𝕏</a>
+                    <a href="#" class="social-icon">📘</a>
+                    <a href="#" class="social-icon">📷</a>
+                    <a href="#" class="social-icon">▶️</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Kategoriler</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Yazılım</a></li>
+                    <li><a href="#">Tasarım</a></li>
+                    <li><a href="#">Oyun</a></li>
+                    <li><a href="#">İnceleme</a></li>
+                    <li><a href="#">Video</a></li>
+                    <li><a href="#">Duyurular</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Kurumsal</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Hakkımızda</a></li>
+                    <li><a href="#">Yazarlar</a></li>
+                    <li><a href="#">İletişim</a></li>
+                    <li><a href="#">Reklam</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Yasal</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Gizlilik Politikası</a></li>
+                    <li><a href="#">Kullanım Koşulları</a></li>
+                    <li><a href="#">Çerez Politikası</a></li>
+                    <li><a href="#">KVKK</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 TeknoHaber. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Giriş Yap</h2>
+                <button class="close-modal" onclick="closeModal('login')">&times;</button>
+            </div>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="loginEmail">E-posta</label>
+                    <input type="email" id="loginEmail" required placeholder="ornek@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Şifre</label>
+                    <input type="password" id="loginPassword" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Giriş Yap</button>
+                <p style="text-align: center; margin-top: 1rem; color: var(--text-secondary);">
+                    Hesabınız yok mu? <a href="#" onclick="switchModal('login', 'register')" style="color: var(--primary);">Kayıt olun</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Kayıt Ol</h2>
+                <button class="close-modal" onclick="closeModal('register')">&times;</button>
+            </div>
+            <form onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label for="registerName">Ad Soyad</label>
+                    <input type="text" id="registerName" required placeholder="Adınız Soyadınız">
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">E-posta</label>
+                    <input type="email" id="registerEmail" required placeholder="ornek@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Şifre</label>
+                    <input type="password" id="registerPassword" required placeholder="••••••••" minlength="6">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Kayıt Ol</button>
+                <p style="text-align: center; margin-top: 1rem; color: var(--text-secondary);">
+                    Zaten hesabınız var mı? <a href="#" onclick="switchModal('register', 'login')" style="color: var(--primary);">Giriş yapın</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        "use strict";
+
+        /* Helper: basit HTML escape to avoid injection in UI */
+        function escapeHtml(str) {
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        // Kullanıcı yönetimi (localStorage tabanlı, demo amaçlı)
+        class UserManager {
+            constructor() {
+                this.users = JSON.parse(localStorage.getItem('users')) || [];
+                this.currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+            }
+
+            register(name, email, password) {
+                if (this.users.find(u => u.email === email)) {
+                    throw new Error('Bu e-posta adresi zaten kayıtlı!');
+                }
+
+                const user = {
+                    id: Date.now(),
+                    name: escapeHtml(name),
+                    email: escapeHtml(email),
+                    password: this.hashPassword(password),
+                    createdAt: new Date().toISOString()
+                };
+
+                this.users.push(user);
+                localStorage.setItem('users', JSON.stringify(this.users));
+                return user;
+            }
+
+            login(email, password) {
+                const user = this.users.find(u =>
+                    u.email === email &&
+                    u.password === this.hashPassword(password)
+                );
+
+                if (!user) {
+                    throw new Error('E-posta veya şifre hatalı!');
+                }
+
+                const { password: _, ...safeUser } = user;
+                this.currentUser = safeUser;
+                localStorage.setItem('currentUser', JSON.stringify(safeUser));
+                return safeUser;
+            }
+
+            logout() {
+                this.currentUser = null;
+                localStorage.removeItem('currentUser');
+                if (window.app && typeof window.app.updateUIForAuth === 'function') {
+                    window.app.updateUIForAuth();
+                }
+            }
+
+            hashPassword(password) {
+                // Basit bir hash (demo). Gerçek projede sunucu tarafı ve güçlü hashing gerekir.
+                return btoa(password);
+            }
+        }
+
+        // Tema yönetimi
+        class ThemeManager {
+            constructor() {
+                this.themeToggle = document.getElementById('themeToggle');
+                this.body = document.body;
+                this.savedTheme = localStorage.getItem('theme') || 'light';
+
+                this.init();
+                this.bindEvents();
+            }
+
+            init() {
+                if (this.savedTheme === 'dark') {
+                    this.body.classList.add('dark-mode');
+                    this.themeToggle.textContent = '☀️';
+                } else {
+                    this.themeToggle.textContent = '🌙';
+                }
+            }
+
+            bindEvents() {
+                this.themeToggle.addEventListener('click', () => this.toggleTheme());
+            }
+
+            toggleTheme() {
+                this.body.classList.toggle('dark-mode');
+                const isDark = this.body.classList.contains('dark-mode');
+                this.themeToggle.textContent = isDark ? '☀️' : '🌙';
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            }
+        }
+
+        // Haber yönetimi ve filtreleme
+        class NewsManager {
+            constructor() {
+                this.currentCategory = 'Öne Çıkanlar';
+                this.newsGrid = document.querySelector('.news-grid');
+
+                this.init();
+            }
+
+            init() {
+                this.bindEvents();
+                this.initializeSearch();
+                this.initializeNavigation();
+                this.filterNewsByCategory(this.currentCategory);
+            }
+
+            bindEvents() {
+                document.querySelectorAll('.tab').forEach(tab => {
+                    tab.addEventListener('click', (e) => {
+                        // kategori metnini baştaki emoji ve boşluktan sonra al
+                        const category = e.target.textContent.replace(/^[^\s]+\s*/, '').trim();
+                        this.currentCategory = category;
+                        this.filterNewsByCategory(category);
+
+                        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                        e.target.classList.add('active');
+                    });
+                });
+
+                    // Haber kartı tıklamaları: her karta data-page attribute eklenmiştir
+                    document.querySelectorAll('.news-card').forEach(card => {
+                        card.addEventListener('click', (e) => {
+                            // Eğer tıklanan hedef bir link veya butonsa, normal davranışı koru
+                            const tagName = e.target.tagName.toLowerCase();
+                            if (tagName === 'a' || tagName === 'button' || e.target.closest('a')) return;
+
+                            const page = card.dataset.page;
+                            if (page) {
+                                window.location.href = page;
+                            } else {
+                                const title = card.querySelector('.news-title')?.textContent || 'haber';
+                                alert(`"${title}" haberine yönlendiriliyorsunuz...`);
+                            }
+                        });
+                    });
+            }
+
+            filterNewsByCategory(category) {
+                const cards = document.querySelectorAll('.news-card');
+                cards.forEach(card => {
+                    const cardCategory = card.querySelector('.news-category').textContent.trim();
+                    if (category === 'Öne Çıkanlar' || cardCategory === category) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+
+            initializeSearch() {
+                const searchInput = document.querySelector('.search-box input');
+                if (!searchInput) return;
+                let searchTimeout;
+
+                searchInput.addEventListener('input', (e) => {
+                    clearTimeout(searchTimeout);
+                    searchTimeout = setTimeout(() => this.performSearch(e.target.value), 250);
+                });
+
+                searchInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.performSearch(e.target.value);
+                    }
+                });
+            }
+
+            performSearch(query) {
+                const q = (query || '').trim().toLowerCase();
+
+                const cards = document.querySelectorAll('.news-card');
+                if (!q) {
+                    // boş arama => mevcut kategori filtresini uygula
+                    this.filterNewsByCategory(this.currentCategory);
+                    return;
+                }
+
+                cards.forEach(card => {
+                    const title = card.querySelector('.news-title').textContent.toLowerCase();
+                    const content = card.querySelector('.news-excerpt').textContent.toLowerCase();
+                    const category = card.querySelector('.news-category').textContent.toLowerCase();
+
+                    const matches = title.includes(q) || content.includes(q) || category.includes(q);
+                    card.style.display = matches ? '' : 'none';
+                });
+            }
+
+            initializeNavigation() {
+                document.querySelectorAll('.nav-menu a').forEach(link => {
+                    link.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        document.querySelectorAll('.nav-menu a').forEach(l => l.classList.remove('active'));
+                        this.classList.add('active');
+                    });
+                });
+            }
+        }
+
+        // Uygulama (bağlayıcı)
+        class App {
+            constructor() {
+                this.userManager = new UserManager();
+                this.themeManager = new ThemeManager();
+                this.newsManager = new NewsManager();
+
+                this.init();
+            }
+
+            init() {
+                this.initializeModals();
+                this.initializeTagHandling();
+                this.initializeLazyLoading();
+                this.initializeSmoothScroll();
+                this.updateUIForAuth();
+            }
+
+            initializeModals() {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.addEventListener('click', (e) => {
+                        if (e.target === modal) {
+                            modal.classList.remove('active');
+                        }
+                    });
+                });
+            }
+
+            initializeTagHandling() {
+                document.querySelectorAll('.tag').forEach(tag => {
+                    tag.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        this.newsManager.performSearch(tag.textContent.replace('#', ''));
+                    });
+                });
+            }
+
+            initializeLazyLoading() {
+                const observer = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('loaded');
+                            obs.unobserve(entry.target);
+                        }
+                    });
+                });
+
+                document.querySelectorAll('img[loading="lazy"]').forEach(img => observer.observe(img));
+            }
+
+            initializeSmoothScroll() {
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', (e) => {
+                        const href = anchor.getAttribute('href');
+                        if (href && href !== '#') {
+                            e.preventDefault();
+                            const target = document.querySelector(href);
+                            if (target) target.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    });
+                });
+            }
+
+            updateUIForAuth() {
+                const authButtons = document.querySelector('.auth-buttons');
+                if (!authButtons) return;
+
+                const currentUser = this.userManager.currentUser;
+                if (currentUser) {
+                    authButtons.innerHTML = '';
+                    const span = document.createElement('span');
+                    span.style.marginRight = '1rem';
+                    span.textContent = `Hoş geldiniz, ${currentUser.name}`;
+                    const btn = document.createElement('button');
+                    btn.className = 'btn btn-outline';
+                    btn.textContent = 'Çıkış Yap';
+                    btn.addEventListener('click', () => {
+                        this.userManager.logout();
+                    });
+                    authButtons.appendChild(span);
+                    authButtons.appendChild(btn);
+                } else {
+                    authButtons.innerHTML = `\n                        <button class="btn btn-outline" onclick="openModal('login')">Giriş Yap</button>\n                        <button class="btn btn-primary" onclick="openModal('register')">Kayıt Ol</button>\n                    `;
+                }
+            }
+        }
+
+        // Form handlers (global so onsubmit inline attributes work)
+        function handleLogin(e) {
+            e.preventDefault();
+            try {
+                const email = document.getElementById('loginEmail').value.trim();
+                const password = document.getElementById('loginPassword').value;
+                window.app.userManager.login(email, password);
+                closeModal('login');
+                window.app.updateUIForAuth();
+            } catch (err) {
+                alert(err.message);
+            }
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            try {
+                const name = document.getElementById('registerName').value.trim();
+                const email = document.getElementById('registerEmail').value.trim();
+                const password = document.getElementById('registerPassword').value;
+                window.app.userManager.register(name, email, password);
+                // auto-login after register
+                window.app.userManager.login(email, password);
+                closeModal('register');
+                window.app.updateUIForAuth();
+            } catch (err) {
+                alert(err.message);
+            }
+        }
+
+        // Modal helpers (global for inline onclicks)
+        function openModal(type) {
+            const modal = document.getElementById(type + 'Modal');
+            if (modal) modal.classList.add('active');
+        }
+
+        function closeModal(type) {
+            const modal = document.getElementById(type + 'Modal');
+            if (modal) modal.classList.remove('active');
+        }
+
+        function switchModal(fromType, toType) {
+            closeModal(fromType);
+            setTimeout(() => openModal(toType), 250);
+        }
+
+        // Başlat
+        window.app = new App();
+    </script>
+</body>
+</html>

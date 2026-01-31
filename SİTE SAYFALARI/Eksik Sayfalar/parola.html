@@ -1,0 +1,254 @@
+<!-- index.html -->
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Parola Güvenliği Araçları — Zift Studio</title>
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#94a3b8;--good:#10b981;--bad:#ef4444}
+    *{box-sizing:border-box;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial}
+    body{margin:0;background:linear-gradient(180deg,#071026 0%, #0f1724 100%);color:#e6eef6;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+    .wrap{width:100%;max-width:980px}
+    header{display:flex;gap:16px;align-items:center;margin-bottom:18px}
+    header h1{margin:0;font-size:20px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:12px;box-shadow: 0 6px 30px rgba(2,6,23,0.6)}
+    .grid{display:grid;grid-template-columns:1fr 380px;gap:16px}
+    label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+    input[type="text"], input[type="password"], select{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+    .row{display:flex;gap:8px}
+    button{background:var(--accent);border:none;padding:10px 12px;border-radius:8px;color:#001;cursor:pointer;font-weight:600}
+    .meter{height:12px;border-radius:8px;background:rgba(255,255,255,0.04);overflow:hidden;margin-top:8px}
+    .meter > i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--bad),var(--good));transition:width .3s ease}
+    .hint{font-size:13px;color:var(--muted);margin-top:8px}
+    .small{font-size:13px;color:var(--muted)}
+    .list{margin:0;padding:0;list-style:none}
+    .panel{padding:12px;border-radius:8px;background:rgba(255,255,255,0.01);margin-top:12px}
+    .badge{display:inline-block;padding:6px 8px;border-radius:999px;background:rgba(255,255,255,0.03);font-size:13px}
+    footer{margin-top:12px;color:var(--muted);font-size:13px}
+    @media (max-width:900px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="card" style="padding:12px 14px;">
+        <strong>Zift Studio</strong>
+        <div class="small">Parola güvenliği eğitim araçları</div>
+      </div>
+      <div style="flex:1"></div>
+      <div class="small">Max için güvenli araçlar • Yasal & eğitim amaçlı</div>
+    </header>
+
+    <div class="grid">
+      <div class="card">
+        <h2 style="margin-top:0;margin-bottom:6px">Parola Güçlendirici & Üretici</h2>
+        <div class="small">Aşağıya kendi parolanızı girip gücünü test edin veya güvenli bir parola üretin.</div>
+
+        <div style="margin-top:14px">
+          <label>Parola (kendi test hesabınız için kullanın)</label>
+          <input id="pwd" type="password" placeholder="Parolanızı buraya yazın — sadece eğitim amaçlı">
+          <div class="meter" aria-hidden="true"><i id="meterBar"></i></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+            <div id="strengthText" class="small">Güç: —</div>
+            <div id="entropyText" class="small">Entropy: — bit</div>
+          </div>
+
+          <div class="panel">
+            <label>Parola oluşturucu</label>
+            <div style="display:flex;gap:8px;align-items:center">
+              <select id="genType">
+                <option value="all">Harf + Rakam + Semboller</option>
+                <option value="memorable">Hatırlanabilir (daha az güçlü)</option>
+                <option value="passphrase">4 kelimelik passphrase</option>
+              </select>
+              <input id="genLen" type="number" min="6" max="64" value="16" style="width:90px" />
+              <button id="genBtn">Oluştur</button>
+            </div>
+            <div style="margin-top:10px;display:flex;gap:8px">
+              <input id="genResult" type="text" readonly />
+              <button id="copyBtn">Kopyala</button>
+            </div>
+            <div class="hint">Oluşturulan parolayı sadece kendi hesaplarınızda kullanın. Parolaları güvenli bir parola yöneticisinde saklayın.</div>
+          </div>
+
+          <div class="panel">
+            <h3 style="margin:0 0 8px 0">Kırılma Süresi Tahmini (bilgilendirici)</h3>
+            <div class="small">Bu kısım, parolanın **teorik** entropy'sine göre kaba kuvvetle kırılma süresini yaklaşık olarak hesaplar. Gerçek dünya koşulları (rate-limit, CAPTCHA, hashing, salt vb.) çok fark ettirir.</div>
+            <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
+              <label style="margin:0">Tahmini tahmin/sec</label>
+              <input id="guessesPerSec" type="number" value="1000000000" min="1" style="width:160px"/>
+            </div>
+            <div style="margin-top:8px">
+              <div class="small">Tahmini kırılma süresi: <strong id="crackTime">—</strong></div>
+              <div class="small">Tahmin açıklaması: <span id="crackNote">—</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px" class="small">
+          <strong>İyi uygulamalar:</strong>
+          <ul class="list">
+            <li>Her hesap için benzersiz parola kullanın.</li>
+            <li>Uzun (≥12) ve rastgele parolalar tercih edin veya passphrase kullanın.</li>
+            <li>2FA (iki faktörlü kimlik doğrulama) aktif edin.</li>
+            <li>Parolaları parola yöneticisinde saklayın.</li>
+          </ul>
+        </div>
+      </div>
+
+      <aside class="card">
+        <h3 style="margin-top:0">Neden şifre kırma aracı oluşturamam?</h3>
+        <p class="small">Başka sistemlerin, uygulamaların veya sitelerin şifrelerini kırmaya yönelik araçlar — teknik olarak mümkün olsa da — yasa dışı ve etik dışıdır. Bu tür araçların sağlanması, paylaşılması ve kullanılması suç teşkil edebilir.</p>
+
+        <div class="panel">
+          <h4 style="margin:0 0 8px 0">Yasal ve öğretici alternatifler</h4>
+          <ol class="small">
+            <li>Yerel test ortamında (VM) OWASP Juice Shop veya DVWA ile güvenlik testi pratiği yap.</li>
+            <li>Parola güvenliği, hashing (bcrypt/argon2), salt kullanımı öğren.</li>
+            <li>Yetkilendirilmiş penetration testing yapmak istiyorsan sertifika (CEH, OSCP) al ve izinli projeler üzerinde çalış.</li>
+          </ol>
+        </div>
+
+        <div style="margin-top:12px" class="panel">
+          <h4 style="margin:0 0 8px 0">Kaynak önerileri</h4>
+          <ul class="small">
+            <li>OWASP — güvenlik konuları</li>
+            <li>Parola yöneticileri: Bitwarden (opensource), KeePassXC</li>
+            <li>Hashing: bcrypt, argon2 dökümanları</li>
+          </ul>
+        </div>
+
+        <footer>
+          <div class="small">Sadece eğitim/koruma amaçlı araçlar. Başka hesapları izinsiz test etme.</div>
+        </footer>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    // Basit entropy / strength hesaplama + generator
+    const pwd = document.getElementById('pwd');
+    const meterBar = document.getElementById('meterBar');
+    const strengthText = document.getElementById('strengthText');
+    const entropyText = document.getElementById('entropyText');
+    const guessesPerSec = document.getElementById('guessesPerSec');
+    const crackTime = document.getElementById('crackTime');
+    const crackNote = document.getElementById('crackNote');
+
+    function charPoolSize(s){
+      let pool = 0;
+      if (/[a-z]/.test(s)) pool += 26;
+      if (/[A-Z]/.test(s)) pool += 26;
+      if (/[0-9]/.test(s)) pool += 10;
+      if (/[^A-Za-z0-9]/.test(s)) pool += 32; // approximate symbols
+      return pool;
+    }
+
+    function bitsOfEntropy(s){
+      if (!s) return 0;
+      const pool = charPoolSize(s);
+      if (pool === 0) return 0;
+      return Math.log2(Math.pow(pool, s.length));
+    }
+
+    function humanTime(seconds){
+      if (!isFinite(seconds) || seconds < 0) return '—';
+      const units = [
+        {label:'yıl', sec:31536000},
+        {label:'gün', sec:86400},
+        {label:'saat', sec:3600},
+        {label:'dakika', sec:60},
+        {label:'saniye', sec:1}
+      ];
+      for (const u of units){
+        if (seconds >= u.sec){
+          const v = Math.floor(seconds / u.sec);
+          return v + ' ' + u.label;
+        }
+      }
+      return Math.round(seconds*1000)/1000 + ' saniye';
+    }
+
+    function updateFromInput(){
+      const s = pwd.value;
+      const bits = Math.round(bitsOfEntropy(s));
+      entropyText.textContent = bits + ' bit';
+      // Strength label
+      let label = 'Çok zayıf', pct = 10;
+      if (bits < 28){ label='Çok zayıf'; pct = 12; }
+      else if (bits < 36){ label='Zayıf'; pct = 28; }
+      else if (bits < 60){ label='Orta'; pct = 60; }
+      else if (bits < 80){ label='Güçlü'; pct = 80; }
+      else { label='Çok güçlü'; pct = 100; }
+      strengthText.textContent = 'Güç: ' + label;
+      meterBar.style.width = pct + '%';
+
+      // Crack time estimate (informative)
+      const guesses = Math.pow(2, bits); // number of possibilities ~ 2^bits
+      const gps = Number(guessesPerSec.value) || 1;
+      const seconds = guesses / gps;
+      crackTime.textContent = humanTime(seconds);
+      crackNote.textContent = 'Bu sadece kaba kuvvet teorik tahminidir — hash algoritması, rate limit, salt, parola yöneticileri, OTP/2FA ve IP bloklama gibi önlemler gerçek kırılma süresini dramatik şekilde uzatır.';
+    }
+
+    pwd.addEventListener('input', updateFromInput);
+    guessesPerSec.addEventListener('input', updateFromInput);
+
+    // Generator
+    const genBtn = document.getElementById('genBtn');
+    const genResult = document.getElementById('genResult');
+    const genType = document.getElementById('genType');
+    const genLen = document.getElementById('genLen');
+    const copyBtn = document.getElementById('copyBtn');
+
+    function randomChoice(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+    function generatePassword(type, length){
+      if (type === 'memorable'){
+        // simple "memorable" generator combining syllables (less strong)
+        const syl = ["ba","be","bi","bo","bu","la","le","li","lo","lu","ta","te","ti","to","tu","mar","can","nur","den","sel"];
+        let out = '';
+        while (out.length < length) out += randomChoice(syl);
+        return out.slice(0, length) + (Math.random()>0.5?String(Math.floor(Math.random()*99)):'');
+      } else if (type === 'passphrase'){
+        // 4 common English words combined
+        const words = ["river","sun","stone","apple","forest","silver","quiet","cloud","ocean","moon","light","field","wind","shadow","star","leaf","ember","oak","pine","hill"];
+        let out = [];
+        for (let i=0;i<4;i++) out.push(randomChoice(words));
+        return out.join('-');
+      } else {
+        const lower = "abcdefghijklmnopqrstuvwxyz";
+        const upper = lower.toUpperCase();
+        const digits = "0123456789";
+        const symbols = "!@#$%^&*()-_=+[]{};:,.<>?";
+        const pool = lower+upper+digits+symbols;
+        let pw = '';
+        for (let i=0;i<length;i++) pw += pool.charAt(Math.floor(Math.random()*pool.length));
+        return pw;
+      }
+    }
+
+    genBtn.addEventListener('click', ()=>{
+      const t = genType.value;
+      let l = parseInt(genLen.value) || 16;
+      if (t==='passphrase') l = 0; // length irrelevant
+      const p = generatePassword(t, l);
+      genResult.value = p;
+    });
+
+    copyBtn.addEventListener('click', async ()=>{
+      try {
+        await navigator.clipboard.writeText(genResult.value);
+        copyBtn.textContent = 'Kopyalandı';
+        setTimeout(()=>copyBtn.textContent='Kopyala',1200);
+      } catch(e){
+        alert('Kopyalama başarısız: ' + (e.message||e));
+      }
+    });
+
+    // Initialize
+    updateFromInput();
+  </script>
+</body>
+  </html>
