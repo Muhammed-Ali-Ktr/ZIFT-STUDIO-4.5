@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Zift Studio, modern web siteleri, mobil uygulamalar ve 3D tasarım çözümleri sunan kreatif teknoloji stüdyosu.">
+    <meta name="keywords" content="yazılım, tasarım, 3D, web geliştirme, mobil uygulama, oyun geliştirme">
+    <link rel="shortcut icon" href="/image/ziftstudio-logo-1.png"/>
+    <title>Zift Studio - Yazılım & Tasarım</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3840256145402837"
+        crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-3840256145402837">
+    <meta name="google-adsense-account" content="ca-pub-3840256145402837">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3840256145402837" crossorigin="anonymous"></script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "url": "https://ziftstudio.digital",
+        "logo": "https://ziftstudio.digital/ziftstudio-logo-1.png"
+    }
+    </script>
+    
+    <style>
+        /* Video Card Özel Stilleri */
+        .work-card.video-card .work-top {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .work-card.video-card video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .work-card.video-card:hover .video-overlay {
+            opacity: 1;
+        }
+        
+        .play-button {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .play-button:hover {
+            transform: scale(1.1);
+        }
+        
+        .play-button i {
+            font-size: 24px;
+            color: #667eea;
+            margin-left: 3px;
+        }
+        
+        /* Video Modal */
+        .video-modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .video-modal.active {
+            display: flex;
+        }
+        
+        .video-modal-content {
+            position: relative;
+            width: 90%;
+            max-width: 1200px;
+            max-height: 90vh;
+        }
+        
+        .video-modal-content video {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        
+        .video-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+        
+        .video-close:hover {
+            transform: scale(1.1);
+        }
+    </style>
+
+    <style>
+        /* YouTube modal ve stil */
+.yt-modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  background: rgba(0,0,0,0.7);
+  padding: 20px;
+  transition: opacity .2s ease;
+}
+.yt-modal.active {
+  display: flex;
+  opacity: 1;
+}
+.yt-modal .yt-wrap {
+  position: relative;
+  width: min(1100px, 95%);
+  max-width: 1100px;
+  aspect-ratio: 16/9;
+  background: #000;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,.5);
+}
+/* responsive iframe fills container */
+.yt-modal iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+/* close button */
+.yt-modal .yt-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(0,0,0,.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  cursor: pointer;
+  z-index: 2;
+  font-size: 16px;
+  transition: background .15s;
+}
+.yt-modal .yt-close:hover { background: rgba(0,0,0,.75); }
+
+/* small tweak: keep play-button above poster */
+.video-card .play-button {
+  z-index: 3;
+  position: relative;
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="mobile-menu-overlay"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">Zift Studio</div>
+            <ul class="nav-links">
+                <li><a href="#home" data-section="home">Ana Sayfa</a></li>
+                <li><a href="#services" data-section="services">Hizmetler</a></li>
+                <li><a href="#works" data-section="works">Portföy</a></li>
+                <li><a href="tools.html" data-section="tools">Tools</a></li>
+                <li><a href="#studio" data-section="studio">Stüdyo</a></li>
+                <li><a href="#contact" data-section="contact">İletişim</a></li>
+                <li class="nav-divider" aria-hidden="true"></li>
+                <li><a href="developer.html">Developer</a></li>
+                <li><a href="create.html">Create</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="technozift.html">Haber</a></li>
+            </ul>
+            <div class="nav-controls">
+                <button class="theme-toggle" title="Tema Değiştir">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="mobile-menu" aria-label="Menüyü Aç">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero" id="home">
+            <div class="container hero-grid">
+                <div class="hero-content">
+                    <p class="eyebrow">Dijital Ürün • Yazılım • 3D Deneyim</p>
+                    <h1>Modern markalar için lüks dijital deneyimler tasarlıyoruz.</h1>
+                    <p class="subtitle">Web, mobil ve 3D tasarım projelerinde ölçeklenebilir ve zamansız çözümler üretirken, işinizi rakiplerinizden ayıran kusursuz kullanıcı deneyimleri sunuyoruz.</p>
+                    <div class="cta-buttons">
+                        <a href="#contact" class="btn btn-primary">Projenizi Anlatalım</a>
+                        <a href="#services" class="btn btn-secondary">Hizmet Kataloğu</a>
+                    </div>
+                    <div class="hero-stats">
+                        <div>
+                            <span class="stat">32+</span>
+                            <span>Başarılı proje</span>
+                        </div>
+                        <div>
+                            <span class="stat">12+</span>
+                            <span>Ülkeye teslimat</span>
+                        </div>
+                        <div>
+                            <span class="stat">7/24</span>
+                            <span>Destek & danışmanlık</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-showcase">
+                    <div class="showcase-card primary">
+                        <h3>Premium Web Platformları</h3>
+                        <p>Headless mimari, React ve Next.js ile ultra hızlı kullanıcı deneyimleri.</p>
+                        <div class="chip-row">
+                            <span class="chip">Next.js</span>
+                            <span class="chip">React Native</span>
+                            <span class="chip">Motion UI</span>
+                        </div>
+                    </div>
+                    <div class="showcase-card secondary">
+                        <h3>3D & Metaverse</h3>
+                        <p>Blender ve Unreal Engine ile hiper-gerçekçi prototipler.</p>
+                        <img src="image/object1.jpg" alt="3D render" loading="lazy">
+                    </div>
+                </div>
+            </div>
+            <div class="client-strip">
+                <span>KonParlamento</span>
+                <span>Emirhantazegül</span>
+                <span>TeknoZift</span>
+                <span>Oto Muammer</span>
+                <span>Cafe Aroma</span>
+            </div>
+        </section>
+
+        <section class="experience" id="services">
+            <div class="container">
+                <div class="section-head">
+                    <p class="eyebrow">Hizmet Kapsamı</p>
+                    <h2>Tek bir çatı altında yazılım, tasarım ve deneyim üretimi.</h2>
+                    <p>Lüks markalar, fintech girişimleri ve eğitim teknolojileri için uçtan uca strateji belirleyip kusursuz uygulamalar geliştiriyoruz.</p>
+                </div>
+                <div class="services-grid">
+                    <article class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-cubes"></i>
+                        </div>
+                        <h3>Headless Web & CMS</h3>
+                        <p>Kurumsal web siteleri, e-ticaret panelleri ve kişiselleştirilmiş yönetim panelleri.</p>
+                        <ul>
+                            <li>Next.js & Astro</li>
+                            <li>CMS entegrasyonları</li>
+                            <li>WebGL animasyonları</li>
+                        </ul>
+                    </article>
+                    <article class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-mobile-screen-button"></i>
+                        </div>
+                        <h3>Mobil Ürün Tasarımı</h3>
+                        <p>iOS ve Android için native hissiyatlı, hızlı ve göz alıcı deneyimler.</p>
+                        <ul>
+                            <li>React Native</li>
+                            <li>Şablonsuz UI kitleri</li>
+                            <li>Performans optimizasyonu</li>
+                        </ul>
+                    </article>
+                    <article class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-chess-knight"></i>
+                        </div>
+                        <h3>Ürün Stratejisi</h3>
+                        <p>Fikir doğrulama, kullanıcı akışı ve büyüme stratejileriyle MVP'den scale aşamasına.</p>
+                        <ul>
+                            <li>UX araştırması</li>
+                            <li>Servis blueprint</li>
+                            <li>Veri odaklı kararlar</li>
+                        </ul>
+                    </article>
+                    <article class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-vr-cardboard"></i>
+                        </div>
+                        <h3>3D & Oyun Deneyimi</h3>
+                        <p>Blender, Unreal Engine ve Unity ile ürün lansmanları ve interaktif showroomlar.</p>
+                        <ul>
+                            <li>Gerçek zamanlı render</li>
+                            <li>AR/VR içerikleri</li>
+                            <li>Metaverse entegrasyonu</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="studio-labs" id="studio">
+            <div class="container studio-grid">
+                <div class="studio-copy">
+                    <p class="eyebrow">Studio Labs</p>
+                    <h2>Konya merkezli global bir kolektif.</h2>
+                    <p>Ürün mimarları, yazılım geliştiriciler, 3D sanatçılar ve stratejistler aynı masa etrafında buluşuyor. Her sprint, ölçülebilir sonuçlar ve premium sunumlarla tamamlanıyor.</p>
+                    <div class="badge-list">
+                        <span class="badge"><i class="fas fa-leaf"></i> Sürdürülebilir kod</span>
+                        <span class="badge"><i class="fas fa-shield-alt"></i> Güvenlik standartları</span>
+                        <span class="badge"><i class="fas fa-gem"></i> Marka odaklı tasarım</span>
+                    </div>
+                </div>
+                <div class="studio-panels">
+                    <div class="panel glass">
+                        <p>"Zift, finans uygulamamızda 2 haftada 140+ ekranı yeniden tasarladı ve canlıya sorunsuz taşıdı."</p>
+                        <div class="panel-meta">
+                            <span>Atlas Mobility</span>
+                            <span>Ürün Lideri</span>
+                        </div>
+                    </div>
+                    <div class="panel gradient">
+                        <div>
+                            <span>Sprint Süresi</span>
+                            <strong>10 gün</strong>
+                        </div>
+                        <div>
+                            <span>Takım</span>
+                            <strong>12 çekirdek</strong>
+                        </div>
+                        <div>
+                            <span>Memnuniyet</span>
+                            <strong>4.9/5</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="works" id="works">
+            <div class="container">
+                <div class="section-head">
+                    <p class="eyebrow">Seçili İşler</p>
+                    <h2>Tek satır koddan, lansmana hazır ürünlere.</h2>
+                </div>
+                <div class="works-grid">
+                    <!-- VİDEO KARTI - YENİ EKLENEN -->
+<article class="work-card video-card">
+    <div class="work-top">
+        <video muted loop playsinline preload="metadata"
+               poster="image/cafe-aroma-cover.png"><!-- POSTERİ BURAYA YAZ -->
+            <source src="videos/cafe-aroma.mp4" type="video/mp4">
+            Tarayıcınız video etiketini desteklemiyor.
+        </video>
+        <div class="video-overlay" 
+             data-video="videos/cafe-aroma.mp4"
+             data-youtube="https://www.youtube.com/embed/l-oMhzNoqUI"><!-- YOUTUBE LİNKİ BURAYA -->
+            <div class="play-button">
+                <i class="fas fa-play"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="work-body">
+        <h3>Cafe Aroma - Web Deneyimi</h3>
+        <p>Modern kafe konsepti için tasarlanmış, kullanıcı dostu ve mobil uyumlu web sitesi.</p>
+        <div class="chip-row">
+            <span class="chip">HTML5</span>
+            <span class="chip">CSS3</span>
+            <span class="chip">Responsive</span>
+        </div>
+    </div>
+</article>
+
+
+<!-- VİDEO KARTI 2 - YENİ EKLENEN -->
+<article class="work-card video-card">
+    <div class="work-top">
+        <video muted loop playsinline preload="metadata"
+               poster="image/konparlamento-cover.png"><!-- POSTERİ BURAYA -->
+            <source src="videos/konparlament.mp4" type="video/mp4">
+            Tarayıcınız video etiketini desteklemiyor.
+        </video>
+        <div class="video-overlay"
+             data-video="videos/konparlamento.mp4"
+             data-youtube="https://www.youtube.com/embed/5tpiKS1V8yo"><!-- YOUTUBE LİNKİ BURAYA -->
+            <div class="play-button">
+                <i class="fas fa-play"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="work-body">
+        <h3>Konparlamento - Web Deneyimi</h3>
+        <p>Konparlamento resmi web sitesi.</p>
+        <div class="chip-row">
+            <span class="chip">HTML5</span>
+            <span class="chip">CSS3</span>
+            <span class="chip">Responsive</span>
+        </div>
+    </div>
+</article>
+
+
+<!-- YENİ VİDEO KARTI 3 -->
+<article class="work-card video-card">
+    <div class="work-top">
+        <video muted loop playsinline preload="metadata"
+               poster="image/emirhantzgl-cover.png"><!-- POSTER -->
+            <source src="videos/emirhantzgl.mp4" type="video/mp4">
+            Tarayıcınız video etiketini desteklemiyor.
+        </video>
+        <div class="video-overlay"
+             data-video="videos/emirhantzgl.mp4"
+             data-youtube="https://www.youtube.com/embed/I8hG8QB9FT4"><!-- YOUTUBE -->
+            <div class="play-button">
+                <i class="fas fa-play"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="work-body">
+        <h3>Emirhan Tazegül - Randevu sistemi</h3>
+        <p>Yenilikçi tasarımlar, etkileşimler ve animasyonlar.</p>
+        <div class="chip-row">
+            <span class="chip">HTML5</span>
+            <span class="chip">CSS Animations</span>
+            <span class="chip">Responsive</span>
+        </div>
+    </div>
+</article>
+
+
+<!-- YENİ VİDEO KARTI 4 
+<article class="work-card video-card">
+    <div class="work-top">
+        <video muted loop playsinline preload="metadata"
+               poster="image/showcase2-cover.png">
+            <source src="videos/showcase2.mp4" type="video/mp4">
+            Tarayıcınız video etiketini desteklemiyor.
+        </video>
+        <div class="video-overlay"
+             data-video="videos/showcase2.mp4"
+             data-youtube="https://www.youtube.com/embed/VIDEO_ID_4">
+            <div class="play-button">
+                <i class="fas fa-play"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="work-body">
+        <h3>Project X - Landing</h3>
+        <p>Ön yüz performans optimizasyonu ve deneyim akışı örneği.</p>
+        <div class="chip-row">
+            <span class="chip">React</span>
+            <span class="chip">Performance</span>
+            <span class="chip">Accessibility</span>
+        </div>
+    </div>
+</article>
+-->
+
+<!-- YENİ VİDEO KARTI 5 
+<article class="work-card video-card">
+    <div class="work-top">
+        <video muted loop playsinline preload="metadata"
+               poster="image/showcase3-cover.png">
+            <source src="videos/showcase3.mp4" type="video/mp4">
+            Tarayıcınız video etiketini desteklemiyor.
+        </video>
+        <div class="video-overlay"
+             data-video="videos/showcase3.mp4"
+             data-youtube="https://www.youtube.com/embed/VIDEO_ID_5">
+            <div class="play-button">
+                <i class="fas fa-play"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="work-body">
+        <h3>Interactive Demo</h3>
+        <p>Gerçek zamanlı etkileşim ve mikro-animasyonlar içeren demo.</p>
+        <div class="chip-row">
+            <span class="chip">WebGL</span>
+            <span class="chip">Three.js</span>
+            <span class="chip">UX</span>
+        </div>
+    </div>
+</article>
+-->
+
+
+                    
+                    <article class="work-card">
+                        <div class="work-top">
+                            <img src="image/catalog1.png" alt="Fintech Dashboard" loading="lazy">
+                        </div>
+                        <div class="work-body">
+                            <h3>Bold Finance OS</h3>
+                            <p>30'dan fazla ülkede kullanılan kurumsal yatırım yönetim platformu.</p>
+                            <div class="chip-row">
+                                <span class="chip">Next.js</span>
+                                <span class="chip">Node.js</span>
+                                <span class="chip">Tailwind</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="work-card">
+                        <div class="work-top">
+                            <img src="image/catalog2.png" alt="E-ticaret" loading="lazy">
+                        </div>
+                        <div class="work-body">
+                            <h3>Nova Commerce XR</h3>
+                            <p>3D ürün deneyimi ile %47 daha yüksek dönüşüm sağlayan omni-channel mağaza.</p>
+                            <div class="chip-row">
+                                <span class="chip">React</span>
+                                <span class="chip">Strapi</span>
+                                <span class="chip">WebGL</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="work-card">
+                        <div class="work-top">
+                            <img src="image/object2.jpg" alt="Mobil uygulama" loading="lazy">
+                        </div>
+                        <div class="work-body">
+                            <h3>Atlas Mobility</h3>
+                            <p>Mikro-mobilite filosu için gerçek zamanlı takip, abonelik ve bakım uygulaması.</p>
+                            <div class="chip-row">
+                                <span class="chip">React Native</span>
+                                <span class="chip">Firebase</span>
+                                <span class="chip">Figma</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="digital-stack">
+            <div class="container">
+                <div class="section-head">
+                    <p class="eyebrow">Teknoloji & Araçlar</p>
+                    <h2>İskele kurmuyoruz, uzun süreli platformlar inşa ediyoruz.</h2>
+                </div>
+                <div class="tools-grid">
+                    <div class="tool-item">
+                        <i class="fab fa-python"></i>
+                        <span>Python</span>
+                    </div>
+                    <div class="tool-item">
+                        <i class="fab fa-js-square"></i>
+                        <span>JavaScript</span>
+                    </div>
+                    <div class="tool-item">
+                        <i class="fab fa-react"></i>
+                        <span>React & React Native</span>
+                    </div>
+                    <div class="tool-item">
+                        <i class="fab fa-node-js"></i>
+                        <span>Node.js</span>
+                    </div>
+                    <div class="tool-item">
+                        <i class="fas fa-cube"></i>
+                        <span>Blender</span>
+                    </div>
+                    <div class="tool-item">
+                        <i class="fas fa-vr-cardboard"></i>
+                        <span>Unreal Engine</span>
+                    </div>
+                    <div class="tool-item">
+                        <i class="fab fa-figma"></i>
+                        <span>Figma</span>
+                    </div>
+                    <div class="tool-item">
+                        <i class="fab fa-git-alt"></i>
+                        <span>Git & CI/CD</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact" id="contact">
+            <div class="container">
+                <div class="contact-wrapper">
+                    <div class="contact-info">
+                        <p class="eyebrow">İletişim</p>
+                        <h2>Bir sonraki lansmanınız için birlikte çalışalım.</h2>
+                        <p>Haftalık demo toplantıları, gerçek zamanlı raporlama ve projenize özel ekipler sunuyoruz.</p>
+                        <div class="contact-cards">
+                            <div>
+                                <span>Konum</span>
+                                <strong>Konya, Türkiye</strong>
+                            </div>
+                            <div>
+                                <span>E-posta</span>
+                                <strong>muhammedalikitir.tr@gmail.com</strong>
+                            </div>
+                            <div>
+                                <span>Telefon</span>
+                                <strong>+90 542 478 62 54</strong>
+                            </div>
+                        </div>
+                        <div class="social-links">
+                            <a href="https://www.instagram.com/zift.studio?igsh=MWNlMXEwcXd1ZTBmZQ==" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="https://github.com" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                    <form class="contact-form" action="php/contact.php" method="POST">
+                        <div class="form-group">
+                            <label for="name">Ad Soyad</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">E-posta</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="project">Proje Türü</label>
+                                <select id="project" name="project" required>
+                                    <option value="">Seçiniz</option>
+                                    <option value="web">Web Sitesi</option>
+                                    <option value="mobile">Mobil Uygulama</option>
+                                    <option value="game">Oyun</option>
+                                    <option value="3d">3D Tasarım</option>
+                                    <option value="other">Diğer</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Mesajınız</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Mesajı Gönder</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Video Modal -->
+    <div class="video-modal" id="videoModal" onclick="closeVideoModal(event)">
+        <div class="video-modal-content" onclick="event.stopPropagation()">
+            <button class="video-close" onclick="closeVideoModal()">&times;</button>
+            <video id="modalVideo" controls>
+                <source src="videos/cafe-aroma.mp4" type="video/mp4">
+                Tarayıcınız video etiketini desteklemiyor.
+            </video>
+        </div>
+    </div>
+
+    <!-- (Single) Video Modal - reused for all work-card previews -->
+    <!-- Keep a single modal element with id "videoModal" and a video element with id "modalVideo" -->
+
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div>
+                <div class="footer-logo">Zift Studio</div>
+                <p>Yeni nesil yazılım ve tasarım stüdyosu. Ölçeklenebilir ürünler için tek adres.</p>
+                <div class="footer-socials">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="X"><i class="fab fa-x-twitter"></i></a>
+                    <a href="https://www.instagram.com/zift.studio?igsh=MWNlMXEwcXd1ZTBmZQ==" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4>Bağlantılar</h4>
+                <ul class="footer-links">
+                    <li><a href="#home">Ana Sayfa</a></li>
+                    <li><a href="proge.html">Projeler</a></li>
+                    <li><a href="shop.html">Mağaza</a></li>
+
+                </ul>
+            </div>
+            <div>
+                <h4>Servisler</h4>
+                <ul class="footer-links">
+                    <li>Web & Mobil</li>
+                    <li>3D & Oyun</li>
+                    <li>Danışmanlık</li>
+                    <li>Bakım & Destek</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2025 Zift Studio. Tüm hakları saklıdır.</span>
+            <span>info@ziftstudio.digital</span>
+        </div>
+    </footer>
+
+    <script src="index.js"></script>
+    <script>
+        // Video hover and modal handling: support multiple .video-card elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hover play/pause for each video card
+            document.querySelectorAll('.video-card').forEach(function(card) {
+                const video = card.querySelector('video');
+                if (!video) return;
+                card.addEventListener('mouseenter', function() {
+                    video.play().catch(function(){});
+                });
+                card.addEventListener('mouseleave', function() {
+                    video.pause();
+                    video.currentTime = 0;
+                });
+            });
+
+            // Modal handling: reuse one modal and set video src dynamically
+            const modal = document.getElementById('videoModal');
+            const modalVideo = document.getElementById('modalVideo');
+
+            document.querySelectorAll('.video-overlay').forEach(function(overlay) {
+                overlay.addEventListener('click', function() {
+                    const src = overlay.getAttribute('data-video');
+                    if (!src) return;
+                    // Replace source(s) inside modalVideo
+                    while (modalVideo.firstChild) modalVideo.removeChild(modalVideo.firstChild);
+                    const source = document.createElement('source');
+                    source.src = src;
+                    source.type = 'video/mp4';
+                    modalVideo.appendChild(source);
+                    modalVideo.load();
+                    modal.classList.add('active');
+                    modalVideo.play().catch(function(){});
+                });
+            });
+
+            // Close when clicking on modal background
+            if (modal) {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) closeVideoModal();
+                });
+            }
+        });
+
+        function closeVideoModal() {
+            const modal = document.getElementById('videoModal');
+            const modalVideo = document.getElementById('modalVideo');
+            if (!modal || !modalVideo) return;
+            modal.classList.remove('active');
+            modalVideo.pause();
+            modalVideo.currentTime = 0;
+            // remove sources to free memory and stop network activity
+            while (modalVideo.firstChild) modalVideo.removeChild(modalVideo.firstChild);
+        }
+
+        // ESC tuşu ile modal kapatma
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeVideoModal();
+            }
+        });
+    </script>
+
+
+
+    <script>
+(function(){
+  // Helper: create modal once
+  function createModal() {
+    const modal = document.createElement('div');
+    modal.className = 'yt-modal';
+    modal.innerHTML = `
+      <div class="yt-wrap" role="dialog" aria-modal="true">
+        <button class="yt-close" aria-label="Kapat">✕</button>
+        <div class="yt-player"></div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+    return modal;
+  }
+
+  const modal = createModal();
+  const playerContainer = modal.querySelector('.yt-player');
+  const closeBtn = modal.querySelector('.yt-close');
+
+  // Open modal with given embed src (must be embed URL like https://www.youtube.com/embed/ID)
+  function openModal(embedUrl) {
+    // ensure embedUrl exists
+    if(!embedUrl) return;
+    // append autoplay params if not present
+    const sep = embedUrl.includes('?') ? '&' : '?';
+    const src = embedUrl + sep + 'autoplay=1&rel=0&iv_load_policy=3';
+    // create iframe
+    const iframe = document.createElement('iframe');
+    iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+    iframe.setAttribute('allowfullscreen', '');
+    iframe.src = src;
+    // clear and append
+    playerContainer.innerHTML = '';
+    playerContainer.appendChild(iframe);
+    modal.classList.add('active');
+    // trap focus optionally - simple focus to close button
+    closeBtn.focus();
+    // prevent body scroll
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal.classList.remove('active');
+    // remove iframe src to stop video
+    playerContainer.innerHTML = '';
+    // restore scroll
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
+  }
+
+  // close events
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', function(e){
+    // click outside .yt-wrap closes
+    if(e.target === modal) closeModal();
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+  });
+
+  // Setup click handlers for every .video-overlay
+  document.querySelectorAll('.video-overlay').forEach(function(overlay){
+    overlay.addEventListener('click', function(e){
+      // prefer data-youtube; if it's a normal watch URL (contains 'watch?v=') convert to embed
+      let yt = overlay.getAttribute('data-youtube') || '';
+      if(yt.includes('watch?v=')) {
+        // convert watch link to embed
+        try {
+          const url = new URL(yt);
+          const id = url.searchParams.get('v');
+          if(id) yt = 'https://www.youtube.com/embed/' + id;
+        } catch(err) { /* ignore */ }
+      }
+      // if a full share url with youtu.be format = convert
+      if(yt.includes('youtu.be/')) {
+        try {
+          const url = new URL(yt);
+          const id = url.pathname.slice(1);
+          if(id) yt = 'https://www.youtube.com/embed/' + id;
+        } catch(err) {}
+      }
+      // fallback: if no data-youtube, try build from data-video using a possible attribute data-youtube-thumb? (not needed)
+      // Pause underlying <video> if exists inside same card
+      const card = overlay.closest('.video-card');
+      if(card){
+        const vid = card.querySelector('video');
+        if(vid && !vid.paused) {
+          try { vid.pause(); } catch(e){}
+        }
+      }
+      // open modal
+      if(yt) openModal(yt);
+      else {
+        // if no youtube provided, but data-video exists, optionally open local video in modal (native)
+        const local = overlay.getAttribute('data-video');
+        if(local){
+          // show local <video> element in modal
+          const el = document.createElement('video');
+          el.src = local;
+          el.setAttribute('controls','');
+          el.setAttribute('autoplay','');
+          el.style.width = '100%';
+          el.style.height = '100%';
+          playerContainer.innerHTML = '';
+          playerContainer.appendChild(el);
+          modal.classList.add('active');
+          document.documentElement.style.overflow = 'hidden';
+          document.body.style.overflow = 'hidden';
+        }
+      }
+    });
+  });
+
+  // Optional: set poster from YouTube thumbnail if video has no poster and data-youtube exists
+  document.querySelectorAll('.work-card.video-card').forEach(function(card){
+    const vid = card.querySelector('video');
+    const overlay = card.querySelector('.video-overlay');
+    if(vid && overlay && (!vid.getAttribute('poster') || vid.getAttribute('poster').trim() === '')) {
+      const yt = overlay.getAttribute('data-youtube') || '';
+      let id = '';
+      if(yt.includes('embed/')) {
+        id = yt.split('embed/')[1].split('?')[0];
+      } else if(yt.includes('watch?v=')) {
+        try { id = (new URL(yt)).searchParams.get('v'); } catch(e){}
+      } else if(yt.includes('youtu.be/')) {
+        try { id = new URL(yt).pathname.slice(1); } catch(e){}
+      }
+      if(id) {
+        const thumb = 'https://img.youtube.com/vi/' + id + '/maxresdefault.jpg';
+        // set as poster (does not check if exists on server)
+        vid.setAttribute('poster', thumb);
+      }
+    }
+  });
+
+})();
+    </script>
+
+</body>
+</html>
+
