@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Zift Studio developer ekibi, modern web ve mobil projeleriniz için premium yazılım çözümleri sunar.">
+    <meta name="keywords" content="yazılım geliştirme, frontend, backend, react, node, react native, devops">
+    <title>Zift Studio · Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="developer.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3840256145402837" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="mobile-menu-overlay"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">Zift Studio</div>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Ana Sayfa</a></li>
+                <li><a href="developer.html" class="active-page">Developer</a></li>
+                <li><a href="create.html">Create</a></li>
+                <li><a href="design.html">Design</a></li>
+                <li><a href="proge.html">Projeler</a></li>
+                <li><a href="shop.html">Shop</a></li>
+            </ul>
+            <div class="nav-controls">
+                <button class="theme-toggle" title="Tema Değiştir">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="mobile-menu" aria-label="Menüyü Aç">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="page-hero developer-hero" id="hero">
+            <div class="container hero-grid">
+                <div class="hero-content">
+                    <p class="eyebrow">Yazılım Mimarisi · Ürün Teslimi</p>
+                    <h1>Ölçeklenebilir ve kusursuz developer deneyimleri tasarlıyoruz.</h1>
+                    <p class="subtitle">Fintech, eğitim, mobilite ve perakende sektörleri için headless web platformları, native mobil uygulamalar ve güvenli backend servisleri geliştiriyoruz.</p>
+                    <div class="cta-buttons">
+                        <a href="#capabilities" class="btn btn-primary">Yetkinlikler</a>
+                        <a href="#packages" class="btn btn-secondary">Paketleri Gör</a>
+                    </div>
+                    <div class="hero-stats">
+                        <div>
+                            <span class="stat">22+</span>
+                            <span>Aktif ürün</span>
+                        </div>
+                        <div>
+                            <span class="stat">9</span>
+                            <span>Çekirdek developer</span>
+                        </div>
+                        <div>
+                            <span class="stat">98%</span>
+                            <span>Müşteri memnuniyeti</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-showcase">
+                    <div class="showcase-card primary">
+                        <h3>Full-stack sprint</h3>
+                        <p>Design system, dev env ve CI/CD süreci 72 saatte ayağa kaldırılır.</p>
+                        <div class="chip-row">
+                            <span class="chip">Next.js</span>
+                            <span class="chip">React Native</span>
+                            <span class="chip">Node + Prisma</span>
+                        </div>
+                    </div>
+                    <div class="showcase-card code-card">
+                        <div class="code-line"><span>// Prod ready API</span></div>
+                        <div class="code-block">
+                            <span class="dim">const</span> createSession = <span class="dim">async</span> (payload) =&gt; &#123;
+                            <br>  await prisma.session.create(&#123;
+                            <br>    data: &#123; ...payload, status: 'active' &#125;
+                            <br>  &#125;);
+                            <br>  return queue.publish('session.created');
+                            <br>&#125;;
+                        </div>
+                        <div class="code-meta">
+                            <span>Latency &lt; 120ms</span>
+                            <span>4 Bölgede dağıtım</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="experience" id="capabilities">
+            <div class="container">
+                <div class="section-head">
+                    <p class="eyebrow">Mimari Yetkinlikler</p>
+                    <h2>Frontend, backend ve mobil ekipler tek sprintte hizalanır.</h2>
+                    <p>Modüler monorepo yapısı, otomatik testler ve CI/CD politikalarıyla her release’i lüks marka standardında yönetiyoruz.</p>
+                </div>
+                <div class="services-grid skills-grid">
+                    <article class="service-card">
+                        <div class="service-icon"><i class="fas fa-layer-group"></i></div>
+                        <h3>Headless Frontend</h3>
+                        <p>Next.js + Astro ile server components, edge render ve WebGL animasyon desteği.</p>
+                        <ul>
+                            <li>Design system kurulumu</li>
+                            <li>Multi-brand temalar</li>
+                            <li>Storybook + Chromatic</li>
+                        </ul>
+                    </article>
+                    <article class="service-card">
+                        <div class="service-icon"><i class="fas fa-server"></i></div>
+                        <h3>Backend & DevOps</h3>
+                        <p>Node, Python ve Rust tabanlı mikro servisler; Kubernetes + Fly.io cluster yönetimi.</p>
+                        <ul>
+                            <li>GraphQL & REST API</li>
+                            <li>Prisma, Postgres, Redis</li>
+                            <li>IaC & observability</li>
+                        </ul>
+                    </article>
+                    <article class="service-card">
+                        <div class="service-icon"><i class="fas fa-mobile-screen-button"></i></div>
+                        <h3>Mobil & Donanım</h3>
+                        <p>React Native, Expo ve Flutter ile App Store / Play Store’a hazır native deneyimler.</p>
+                        <ul>
+                            <li>OTA güncellemeler</li>
+                            <li>IoT + BLE entegrasyonu</li>
+                            <li>Design token senkronu</li>
+                        </ul>
+                    </article>
+                    <article class="service-card">
+                        <div class="service-icon"><i class="fas fa-shield-alt"></i></div>
+                        <h3>Güvenlik & Performans</h3>
+                        <p>OWASP top 10, SOC2 politikaları ve otomatik load testler ile garantili kalite.</p>
+                        <ul>
+                            <li>Pen test & hardening</li>
+                            <li>Rate limit & WAF</li>
+                            <li>Real User Monitoring</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="studio-labs pipelines" id="pipelines">
+            <div class="container studio-grid">
+                <div class="studio-copy">
+                    <p class="eyebrow">Teslimat Süreci</p>
+                    <h2>Stratejiden release’e kadar ölçülebilir bir yolculuk.</h2>
+                    <p>Takvimler yerine outcome konuşuyoruz. Sprint ritmi, demo seansları ve kalite checklist’leri standart.</p>
+                    <div class="badge-list">
+                        <span class="badge"><i class="fas fa-clock"></i> 10 günlük sprintler</span>
+                        <span class="badge"><i class="fas fa-vial"></i> %80 test coverage</span>
+                        <span class="badge"><i class="fas fa-robot"></i> Tam otomasyon CI</span>
+                    </div>
+                </div>
+                <div class="studio-panels timeline-panels">
+                    <div class="timeline-item">
+                        <span>01</span>
+                        <h4>Blueprint & Setup</h4>
+                        <p>Monorepo, env secretes, tasarım tokenları ve veri modelinin ilk versiyonu.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span>02</span>
+                        <h4>Sprint Üretimi</h4>
+                        <p>Öncelikli ekranlar, API son noktaları ve mobil akışlar paralel ilerler.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span>03</span>
+                        <h4>Test & Launch</h4>
+                        <p>Playwright + Detox testleri, yük testleri ve çok bölgeli yayına alma.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="digital-stack tech-grid" id="stack">
+            <div class="container">
+                <div class="section-head">
+                    <p class="eyebrow">Teknoloji Stack</p>
+                    <h2>Seçkin projelerde kullandığımız modern araçlar.</h2>
+                </div>
+                <div class="stack-grid">
+                    <div class="stack-card">
+                        <span>Frontend</span>
+                        <p>Next.js, Astro, React Server Components, Tailwind, Framer Motion</p>
+                    </div>
+                    <div class="stack-card">
+                        <span>Backend</span>
+                        <p>Node.js, Fastify, Python FastAPI, GraphQL, tRPC, Prisma, Postgres</p>
+                    </div>
+                    <div class="stack-card">
+                        <span>Mobile & Edge</span>
+                        <p>React Native, Expo Router, Flutter, Vercel Edge, Cloudflare Workers</p>
+                    </div>
+                    <div class="stack-card">
+                        <span>DevOps</span>
+                        <p>Docker, Kubernetes, Github Actions, Fly.io, Terraform, Sentry, Datadog</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="packages" id="packages">
+            <div class="container">
+                <div class="section-head">
+                    <p class="eyebrow">Paketler</p>
+                    <h2>Takımınızı scale ederken seçebileceğiniz iş modelleri.</h2>
+                </div>
+                <div class="pricing-grid">
+                    <article class="pricing-card">
+                        <h3>Launch Sprint</h3>
+                        <p class="price-tag">₺35.000+</p>
+                        <ul>
+                            <li>2 haftalık discovery</li>
+                            <li>Design system + component kit</li>
+                            <li>Landing + CMS entegrasyonu</li>
+                            <li>CI/CD & hosting kurulumu</li>
+                        </ul>
+                        <a href="#cta" class="btn btn-secondary">Detay al</a>
+                    </article>
+                    <article class="pricing-card featured">
+                        <h3>Scale Squad</h3>
+                        <p class="price-tag">₺65.000+</p>
+                        <ul>
+                            <li>Çapraz fonksiyonel 4 kişilik ekip</li>
+                            <li>Mobil + web paralel geliştirme</li>
+                            <li>Analitik & data event şeması</li>
+                            <li>24/7 prod destek</li>
+                        </ul>
+                        <a href="#cta" class="btn btn-primary">Toplantı planla</a>
+                    </article>
+                    <article class="pricing-card">
+                        <h3>Enterprise Lab</h3>
+                        <p class="price-tag">Teklif</p>
+                        <ul>
+                            <li>Çok bölgeli mimari</li>
+                            <li>SOC2/GDPR uyumluluğu</li>
+                            <li>Özel SLA ve bakım ekibi</li>
+                            <li>Uzun vadeli roadmap</li>
+                        </ul>
+                        <a href="#cta" class="btn btn-secondary">İletişime geç</a>
+                    </article>
+                </div>
+                <div class="matrix-wrapper">
+                    <div class="table-headline">
+                        <span>Karşılaştırma Matrisi</span>
+                        <p>Her paket için kapsam ve teslim süreleri.</p>
+                    </div>
+                    <div class="matrix-grid">
+                        <div class="matrix-cell title">Teslim Süresi</div>
+                        <div class="matrix-cell">3 hafta</div>
+                        <div class="matrix-cell">6 hafta</div>
+                        <div class="matrix-cell">Projeye özel</div>
+                        <div class="matrix-cell title">Takvim</div>
+                        <div class="matrix-cell">Günlük rapor</div>
+                        <div class="matrix-cell">Günlük + demo</div>
+                        <div class="matrix-cell">Özel dashboard</div>
+                        <div class="matrix-cell title">Destek</div>
+                        <div class="matrix-cell">1 ay</div>
+                        <div class="matrix-cell">3 ay</div>
+                        <div class="matrix-cell">SLA 24/7</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact cta-section" id="cta">
+            <div class="container contact-wrapper">
+                <div class="contact-info">
+                    <p class="eyebrow">Partnerlik</p>
+                    <h2>Yeni ürününüz için developer ekibimizi hızla devreye alalım.</h2>
+                    <p>10 dakikalık bir keşif görüşmesiyle sprint planı, ekip kompozisyonu ve bütçe önerisini aynı gün teslim ediyoruz.</p>
+                    <div class="contact-cards">
+                        <div>
+                            <span>E-posta</span>
+                            <strong>muhammedalikitir.tr@gmail.com</strong>
+                        </div>
+                        <div>
+                            <span>Telefon</span>
+                            <strong>+90 542 478 62 54</strong>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/zift.studio?igsh=MWNlMXEwcXd1ZTBmZQ==" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://github.com" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <form class="contact-form" action="php/contact.php" method="POST">
+                    <div class="form-group">
+                        <label for="name">Ad Soyad</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">E-posta</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="project">Proje Türü</label>
+                            <select id="project" name="project" required>
+                                <option value="">Seçiniz</option>
+                                <option value="web">Headless Web Platformu</option>
+                                <option value="mobile">Mobil Uygulama</option>
+                                <option value="backend">Backend & API</option>
+                                <option value="devops">DevOps & CI/CD</option>
+                                <option value="other">Diğer</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Mesajınız</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Gönder</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div>
+                <div class="footer-logo">Zift Studio</div>
+                <p>Yeni nesil yazılım ve tasarım stüdyosu. Ölçeklenebilir ürünler için tek adres.</p>
+                <div class="footer-socials">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="X"><i class="fab fa-x-twitter"></i></a>
+                    <a href="https://www.instagram.com/zift.studio?igsh=MWNlMXEwcXd1ZTBmZQ==" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4>Bağlantılar</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html#home">Ana Sayfa</a></li>
+                    <li><a href="create.html">Create</a></li>
+                    <li><a href="design.html">Tasarımlar</a></li>
+                    <li><a href="shop.html">Mağaza</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Servisler</h4>
+                <ul class="footer-links">
+                    <li>Headless Web</li>
+                    <li>Mobil & IoT</li>
+                    <li>Backend & API</li>
+                    <li>DevOps & Bakım</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2025 Zift Studio. Tüm hakları saklıdır.</span>
+            <span>info@ziftstudio.digital</span>
+        </div>
+    </footer>
+
+    <script src="index.js"></script>
+</body>
+</html>

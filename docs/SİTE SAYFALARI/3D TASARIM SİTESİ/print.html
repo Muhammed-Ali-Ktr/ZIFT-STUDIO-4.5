@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D STL Dosyaları - Premium Modeller</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome için CDN (ikonlar için) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- TOP BANNER -->
+    <div class="top-banner">
+        <div class="container">
+            <p>1500 TL ve Üzeri Kargo Ücretsiz</p>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-content">
+                <!-- Logo -->
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-cube"></i>
+                    </div>
+                    <div class="logo-text">
+                        <span class="logo-main">3D STL</span>
+                        <span class="logo-sub">printing solutions</span>
+                    </div>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="search-container">
+                    <input type="text" id="searchInput" class="search-input" placeholder="Arama">
+                    <button class="search-button" id="searchBtn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+
+                <!-- Header Actions -->
+                <div class="header-actions">
+                    <button class="btn-header" id="userBtn">
+                        <i class="fas fa-user"></i>
+                        <span>Üye Girişi</span>
+                    </button>
+                    <button class="btn-header" id="cartBtn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Sepetim <span id="cartCount">0</span></span>
+                    </button>
+                    <!-- Theme Toggle -->
+                    <button class="theme-toggle" id="themeToggle" aria-label="Tema Değiştir" title="Tema Değiştir">
+                        <i class="fas fa-palette"></i>
+                    </button>
+                    <!-- Mobile Menu Toggle -->
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menü">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAVIGATION MENU -->
+    <nav class="main-nav">
+        <div class="container">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="#models" class="nav-link">3D Baskı Ürünler</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">3D Yazıcılar</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Filamentler</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Reçineler</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">3D Tarayıcılar</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Yedek Parça ve Aksesuar</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">3D Baskı Hizmeti</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">Bize ulaşın!</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Teknik Servis</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Sipariş Takibi</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- BREADCRUMB -->
+    <div class="breadcrumb">
+        <div class="container">
+            <a href="#home">Anasayfa</a>
+            <span>|</span>
+            <span>3D Baskı Ürünler</span>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <div class="container">
+            <div class="content-wrapper">
+                <!-- SIDEBAR -->
+                <aside class="sidebar">
+                    <!-- Categories -->
+                    <div class="sidebar-section">
+                        <h3 class="sidebar-title">
+                            <i class="fas fa-list"></i>
+                            Kategoriler
+                        </h3>
+                        <div class="category-search">
+                            <input type="text" placeholder="Kategori ara..." id="categorySearch">
+                        </div>
+                        <ul class="category-list" id="categoryList">
+                            <li class="category-item">
+                                <label>
+                                    <input type="checkbox" data-category="all" class="category-checkbox">
+                                    <span>Tümü</span>
+                                </label>
+                            </li>
+                            <li class="category-item">
+                                <label>
+                                    <input type="checkbox" data-category="decorative" class="category-checkbox">
+                                    <span>Dekoratif</span>
+                                </label>
+                            </li>
+                            <li class="category-item">
+                                <label>
+                                    <input type="checkbox" data-category="mechanical" class="category-checkbox">
+                                    <span>Mekanik Parçalar</span>
+                                </label>
+                            </li>
+                            <li class="category-item">
+                                <label>
+                                    <input type="checkbox" data-category="organizer" class="category-checkbox">
+                                    <span>Organizer</span>
+                                </label>
+                            </li>
+                            <li class="category-item">
+                                <label>
+                                    <input type="checkbox" data-category="toys" class="category-checkbox">
+                                    <span>Oyuncaklar</span>
+                                </label>
+                            </li>
+                            <li class="category-item">
+                                <label>
+                                    <input type="checkbox" data-category="electronics" class="category-checkbox">
+                                    <span>Elektronik Kutuları</span>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Filters -->
+                    <div class="sidebar-section">
+                        <h3 class="sidebar-title">
+                            <i class="fas fa-filter"></i>
+                            Filtreler
+                        </h3>
+                        <ul class="filter-list">
+                            <li class="filter-item">
+                                <label>
+                                    <input type="checkbox" id="filterDiscount" class="filter-checkbox">
+                                    <span>İndirimli Ürünler</span>
+                                </label>
+                            </li>
+                            <li class="filter-item">
+                                <label>
+                                    <input type="checkbox" id="filterFreeShipping" class="filter-checkbox">
+                                    <span>Ücretsiz Kargo</span>
+                                </label>
+                            </li>
+                            <li class="filter-item">
+                                <label>
+                                    <input type="checkbox" id="filterInStock" class="filter-checkbox">
+                                    <span>Stokta Var</span>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </aside>
+
+                <!-- PRODUCTS AREA -->
+                <div class="products-area">
+                    <div class="products-header">
+                        <h1 class="page-title">3D Baskı Ürünler</h1>
+                        <div class="products-controls">
+                            <div class="sort-container">
+                                <label for="sortSelect">Sıralama Seçiniz</label>
+                                <select id="sortSelect" class="sort-select">
+                                    <option value="popular">En Popüler</option>
+                                    <option value="price-low">Fiyat: Düşükten Yükseğe</option>
+                                    <option value="price-high">Fiyat: Yüksekten Düşüğe</option>
+                                    <option value="newest">En Yeni</option>
+                                    <option value="rating">En Yüksek Puan</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Products Grid -->
+                    <div class="products-grid" id="modelsGrid">
+                        <!-- Models will be dynamically inserted here by JavaScript -->
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pagination">
+                        <button class="page-btn" disabled>
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn">2</button>
+                        <button class="page-btn">3</button>
+                        <button class="page-btn">4</button>
+                        <button class="page-btn">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+
+                    <!-- No Results Message -->
+                    <div class="no-results" id="noResults" style="display: none;">
+                        <i class="fas fa-search"></i>
+                        <p>Sonuç bulunamadı. Lütfen farklı bir arama yapın.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- MODEL DETAIL MODAL -->
+    <div class="modal" id="modelModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-body" id="modalBody">
+                <!-- Modal content will be inserted by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- USER LOGIN MODAL -->
+    <div class="modal" id="userModal">
+        <div class="modal-content modal-small">
+            <button class="modal-close" id="userModalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-body">
+                <h2 class="modal-title">Üye Girişi</h2>
+                <form id="loginForm" class="auth-form">
+                    <div class="form-group">
+                        <label for="email">E-posta</label>
+                        <input type="email" id="email" name="email" placeholder="ornek@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Şifre</label>
+                        <input type="password" id="password" name="password" placeholder="Şifrenizi girin" required>
+                    </div>
+                    <button type="submit" class="btn-download">Giriş Yap</button>
+                    <p class="auth-link">
+                        Hesabınız yok mu? <a href="#" id="showRegister">Kayıt Ol</a>
+                    </p>
+                </form>
+                <form id="registerForm" class="auth-form" style="display: none;">
+                    <h2 class="modal-title">Kayıt Ol</h2>
+                    <div class="form-group">
+                        <label for="regName">Ad Soyad</label>
+                        <input type="text" id="regName" name="name" placeholder="Adınız Soyadınız" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regEmail">E-posta</label>
+                        <input type="email" id="regEmail" name="email" placeholder="ornek@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regPassword">Şifre</label>
+                        <input type="password" id="regPassword" name="password" placeholder="En az 6 karakter" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regPasswordConfirm">Şifre Tekrar</label>
+                        <input type="password" id="regPasswordConfirm" name="passwordConfirm" placeholder="Şifrenizi tekrar girin" required>
+                    </div>
+                    <button type="submit" class="btn-download">Kayıt Ol</button>
+                    <p class="auth-link">
+                        Zaten hesabınız var mı? <a href="#" id="showLogin">Giriş Yap</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- CART MODAL -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content modal-medium">
+            <button class="modal-close" id="cartModalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-body">
+                <h2 class="modal-title">Sepetim</h2>
+                <div id="cartItems" class="cart-items">
+                    <!-- Cart items will be inserted here -->
+                </div>
+                <div class="cart-summary">
+                    <div class="cart-total">
+                        <span>Toplam:</span>
+                        <span id="cartTotal">0.00 ₺</span>
+                    </div>
+                    <button class="btn-download" id="checkoutBtn">Ödemeye Geç</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-cube"></i>
+                        <span>3D STL <span class="logo-accent">PREMIUM</span></span>
+                    </div>
+                    <p>
+                        3D yazıcılar için hazır STL dosyaları. 
+                        Profesyonel kalite, kolay indirme.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Hızlı Linkler</h4>
+                    <ul>
+                        <li><a href="#home">Ana Sayfa</a></li>
+                        <li><a href="#models">Modeller</a></li>
+                        <li><a href="#categories">Kategoriler</a></li>
+                        <li><a href="#about">Hakkımızda</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Kategoriler</h4>
+                    <ul>
+                        <li><a href="#models" data-filter="decorative">Dekoratif</a></li>
+                        <li><a href="#models" data-filter="mechanical">Mekanik</a></li>
+                        <li><a href="#models" data-filter="organizer">Organizer</a></li>
+                        <li><a href="#models" data-filter="toys">Oyuncaklar</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>İletişim</h4>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> info@3dstlpremium.com</li>
+                        <li><i class="fas fa-phone"></i> +90 (555) 123 45 67</li>
+                        <li><i class="fas fa-map-marker-alt"></i> İstanbul, Türkiye</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 3D STL Premium. Tüm hakları saklıdır.</p>
+                <p class="license">Modeller Creative Commons lisansı altında sunulmaktadır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>

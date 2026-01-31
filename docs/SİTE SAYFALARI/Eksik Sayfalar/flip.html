@@ -1,0 +1,74 @@
+<!doctype html>
+
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Flip Clock - ZiftStudio</title>  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3840256145402837" crossorigin="anonymous"></script>
+  <style>
+:root{
+  --bg:#0b0b0b;--card-bg:#111;--text:#cfcfcf;--accent:#444;
+}
+[data-theme="light"]{--bg:#f5f5f7;--card-bg:#fff;--text:#111;--accent:#ddd}
+[data-theme="blue"]{--bg:#0b1420;--card-bg:#08121a;--text:#dbe9ff;--accent:#123a63}
+[data-theme="green"]{--bg:#071209;--card-bg:#08120a;--text:#dff7e0;--accent:#134f2f}
+*{box-sizing:border-box}html,body{height:100%}
+body{margin:0;font-family:Inter,system-ui;background:var(--bg);color:var(--text);display:flex;flex-direction:column;align-items:center}
+.topbar{width:100%;max-width:1100px;padding:18px 22px;display:flex;justify-content:space-between;align-items:center}
+.controls{display:flex;gap:12px;align-items:center}
+.controls select,.controls button{padding:8px 10px;border-radius:8px;border:none;background:var(--card-bg);color:var(--text);font-weight:600;cursor:pointer}
+.clock-area{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%}
+.flip-clock{display:flex;gap:36px;align-items:center;justify-content:center;max-width:1100px;width:100%;padding:20px}
+.card{background:linear-gradient(180deg,var(--card-bg),#0b0b0b);width:46vw;max-width:480px;height:300px;display:flex;align-items:center;justify-content:center;border-radius:28px;position:relative;box-shadow:0 10px 30px rgba(0,0,0,.6);border:2px solid rgba(255,255,255,.02)}
+.card.minute{width:32vw;max-width:420px}
+.card .ampm{position:absolute;left:22px;top:20px;font-weight:800;opacity:.9}
+.panel{position:relative;overflow:hidden;width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+.panel .upper,.panel .lower{position:absolute;width:90%;left:5%;text-align:center;font-size:260px;font-weight:700;line-height:.9;color:var(--text)}
+.panel .upper{top:10%;transform-origin:center bottom}
+.panel .lower{bottom:10%;transform-origin:center top}
+.panel::before{content:"";position:absolute;left:0;right:0;top:50%;height:2px;background:rgba(0,0,0,.5)}
+.flip{position:absolute;left:5%;width:90%;height:50%;overflow:hidden;backface-visibility:hidden;border-radius:6px}
+.top-flip{top:10%;transform-origin:center bottom}
+.bottom-flip{bottom:10%;transform-origin:center top}
+.top-flip .content,.bottom-flip .content{display:flex;align-items:center;justify-content:center;height:100%;font-size:260px;font-weight:700}
+.card::after{content:"";position:absolute;inset:0;border-radius:28px;box-shadow:inset 0 -40px 70px rgba(0,0,0,.6)}
+.date{margin-top:18px;font-size:18px;opacity:.9}
+@media(max-width:900px){.card{height:220px;border-radius:20px}.panel .upper,.panel .lower{font-size:150px}}
+@media(max-width:480px){.flip-clock{gap:18px}.card{width:44vw;height:160px;border-radius:16px}.panel .upper,.panel .lower{font-size:96px}.controls select{padding:6px}}
+  </style>
+</head>
+<body>
+<header class="topbar">
+  <h1>Saat</h1>
+  <div class="controls">
+    <select id="themeSelect"><option value="dark">Siyah</option><option value="light">Beyaz</option><option value="blue">Mavi</option><option value="green">Yeşil</option></select>
+    <button id="toggle24">24 saat</button>
+  </div>
+</header>
+<main class="clock-area">
+  <div class="flip-clock">
+    <div class="card hour">
+      <div class="ampm">AM</div>
+      <div class="panel"><div class="upper">5</div><div class="lower">5</div></div>
+      <div class="flip top-flip"></div><div class="flip bottom-flip"></div>
+    </div>
+    <div class="card minute">
+      <div class="panel"><div class="upper">21</div><div class="lower">21</div></div>
+      <div class="flip top-flip"></div><div class="flip bottom-flip"></div>
+    </div>
+  </div>
+  <div class="date" id="date"></div>
+</main>
+<script>
+(function(){
+const hourCard=document.querySelector('.card.hour .panel');const minuteCard=document.querySelector('.card.minute .panel');const ampmEl=document.querySelector('.card.hour .ampm');const dateEl=document.getElementById('date');const themeSelect=document.getElementById('themeSelect');const toggle24=document.getElementById('toggle24');let use24=false;
+const applyTheme=t=>document.documentElement.setAttribute('data-theme',t);themeSelect.addEventListener('change',e=>applyTheme(e.target.value));toggle24.addEventListener('click',()=>{use24=!use24;toggle24.textContent=use24?'12 saat':'24 saat';updateClock()});function pad(n){return n<10?'0'+n:''+n}
+function animateFlip(panel,oldVal,newVal){const u=panel.querySelector('.upper');const l=panel.querySelector('.lower');const t=panel.parentElement.querySelector('.top-flip');const b=panel.parentElement.querySelector('.bottom-flip');u.textContent=oldVal;l.textContent=oldVal;t.innerHTML=`<div class="content">${oldVal}</div>`;b.innerHTML=`<div class="content">${newVal}</div>`;t.style.transform='rotateX(0deg)';t.style.transition='transform 260ms ease-in';requestAnimationFrame(()=>{t.style.transform='rotateX(-90deg)'});setTimeout(()=>{u.textContent=newVal;b.style.transform='rotateX(90deg)';b.style.transition='transform 260ms ease-out';requestAnimationFrame(()=>{b.style.transform='rotateX(0deg)'});setTimeout(()=>{l.textContent=newVal;t.style.transition='';b.style.transition=''},300)},280)}
+let last={h:'',m:''};function updateClock(){const n=new Date();let h=n.getHours();const m=n.getMinutes();const am=h>=12?'PM':'AM';if(!use24)h=h%12||12;const hs=''+h;const ms=pad(m);if(last.h!==hs){animateFlip(hourCard,last.h||hs,hs);last.h=hs}if(last.m!==ms){animateFlip(minuteCard,last.m||ms,ms);last.m=ms}ampmEl.textContent=am;const d=n.getDate(),mo=n.getMonth()+1,y=n.getFullYear();dateEl.textContent=`${String(d).padStart(2,'0')} - ${String(mo).padStart(2,'0')} - ${y}`}
+document.querySelectorAll('.flip').forEach(f=>{const c=document.createElement('div');c.className='content';c.style.cssText='display:flex;align-items:center;justify-content:center;height:100%';f.appendChild(c)});
+updateClock();setInterval(updateClock,1000);applyTheme('dark');})();
+</script>
+</body>
+</html>
