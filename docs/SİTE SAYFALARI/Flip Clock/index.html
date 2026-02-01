@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChronoFocus | Pro Flip Clock & Timer</title>
+    <!-- Preconnect for fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Google Fonts: Inter (UI), and various display fonts for the clock -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;700&family=Abril+Fatface&family=Bebas+Neue&family=Orbitron:wght@400;700&family=Playfair+Display:wght@400;700&family=Righteous&family=Roboto+Mono:wght@400;700&family=Roboto:wght@400;700&family=Open+Sans:wght@400;700&family=Lato:wght@400;700&family=Montserrat:wght@400;700&family=Raleway:wght@400;700&family=Poppins:wght@400;700&family=Oswald:wght@400;700&family=Source+Sans+Pro:wght@400;700&family=Ubuntu:wght@400;700&family=Nunito:wght@400;700&family=Rubik:wght@400;700&family=PT+Sans:wght@400;700&family=Merriweather:wght@400;700&family=Lora:wght@400;700&family=Crimson+Text:wght@400;700&family=Libre+Baskerville:wght@400;700&family=PT+Serif:wght@400;700&family=Space+Mono:wght@400;700&family=Inconsolata:wght@400;700&family=Courier+Prime:wght@400;700&family=Press+Start+2P&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+
+<body>
+
+    <!-- App Background & Effects -->
+    <div id="app-background" class="background-layer"></div>
+    <video id="bg-video" class="background-video" loop muted playsinline></video>
+    <div id="app-grain" class="grain-layer"></div>
+    <div id="app-vignette" class="vignette-layer"></div>
+
+    <!-- Main Application Container -->
+    <main id="app">
+
+        <!-- Top Info Bar (Timer Info / Date) -->
+        <header id="top-bar" class="ui-element">
+            <div class="current-date" id="date-display">Monday, October 24</div>
+            <div class="timer-status hidden" id="timer-status">
+                <span class="badge" id="mode-badge" data-i18n="pomodoro">Pomodoro</span>
+                <span class="lap-count" id="lap-count" data-i18n="round">Round 1/4</span>
+            </div>
+        </header>
+
+        <!-- The Flip Clock -->
+        <div id="clock-container">
+            <!-- Hours -->
+            <div class="flip-group" id="group-hours">
+                <div class="flip-card" data-value="00">
+                    <div class="top">00</div>
+                    <div class="bottom">00</div>
+                    <div class="top-back">00</div>
+                    <div class="bottom-back">00</div>
+                </div>
+            </div>
+
+            <!-- Separator -->
+            <div class="separator">:</div>
+
+            <!-- Minutes -->
+            <div class="flip-group" id="group-minutes">
+                <div class="flip-card" data-value="00">
+                    <div class="top">00</div>
+                    <div class="bottom">00</div>
+                    <div class="top-back">00</div>
+                    <div class="bottom-back">00</div>
+                </div>
+            </div>
+
+            <!-- Seconds (Optional) -->
+            <div class="separator sec-separator">:</div>
+            <div class="flip-group" id="group-seconds">
+                <div class="flip-card" data-value="00">
+                    <div class="top">00</div>
+                    <div class="bottom">00</div>
+                    <div class="top-back">00</div>
+                    <div class="bottom-back">00</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AM/PM Indicator -->
+        <div id="meridiem" class="meridiem ui-element">AM</div>
+
+        <!-- Bottom Controls -->
+        <div id="bottom-controls" class="ui-element">
+            <div class="control-group">
+                <button id="btn-mode" title="Switch Mode" data-i18n-title="switch_mode"><i
+                        class="ph ph-timer"></i></button>
+                <button id="btn-play-pause" title="Start/Pause" data-i18n-title="start_pause"><i
+                        class="ph ph-play"></i></button>
+                <button id="btn-reset" title="Reset Timer" data-i18n-title="reset_timer"><i
+                        class="ph ph-arrow-counter-clockwise"></i></button>
+            </div>
+
+            <div class="control-group center-group">
+                <div class="focus-message" id="focus-message" data-i18n="stay_focused">Stay Focused</div>
+            </div>
+
+            <div class="control-group">
+                <button id="btn-audio" title="Ambience Mixer" data-i18n-title="ambience"><i
+                        class="ph ph-speaker-high"></i></button>
+                <button id="btn-settings" title="Settings" data-i18n-title="settings"><i
+                        class="ph ph-gear"></i></button>
+                <button id="btn-fullscreen" title="Fullscreen" data-i18n-title="fullscreen"><i
+                        class="ph ph-corners-out"></i></button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Settings Drawer -->
+    <aside id="settings-drawer" class="drawer">
+        <div class="drawer-header">
+            <h2 data-i18n="settings">Settings</h2>
+            <button id="btn-close-settings" class="close-btn"><i class="ph ph-x"></i></button>
+        </div>
+
+        <div class="drawer-content">
+            <!-- Tabs -->
+            <div class="settings-tabs">
+                <button class="tab-btn active" data-tab="visual" data-i18n="visual">Visual</button>
+                <button class="tab-btn" data-tab="functional" data-i18n="time">Time</button>
+                <button class="tab-btn" data-tab="productivity" data-i18n="focus">Focus</button>
+                <button class="tab-btn" data-tab="audio" data-i18n="audio">Audio</button>
+                <button class="tab-btn" data-tab="system" data-i18n="system">System</button>
+            </div>
+
+            <!-- Panel: Visual -->
+            <div class="settings-panel active" id="panel-visual">
+                <h3 data-i18n="theme_appearance">Theme & Appearance</h3>
+
+                <div class="setting-item">
+                    <label data-i18n="language">Language / Dil</label>
+                    <div class="toggle-switch-container">
+                        <span class="toggle-label">EN</span>
+                        <label class="switch">
+                            <input type="checkbox" id="set-language">
+                            <span class="slider round"></span>
+                        </label>
+                        <span class="toggle-label">TR</span>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <label data-i18n="theme_preset">Theme Preset</label>
+                    <select id="set-theme">
+                        <option value="dark" data-i18n="dark_modern">Dark Modern</option>
+                        <option value="light" data-i18n="soft_light">Soft Light</option>
+                        <option value="retro" data-i18n="retro_orange">Retro Orange</option>
+                        <option value="cyberpunk" data-i18n="cyberpunk_neon">Cyberpunk Neon</option>
+                        <option value="forest" data-i18n="forest_zen">Forest Zen</option>
+                        <option value="sepia" data-i18n="vintage_sepia">Vintage Sepia</option>
+                    </select>
+                </div>
+
+                <div class="setting-item">
+                    <label data-i18n="background_url">Background URL (Image/Video)</label>
+                    <input type="text" id="set-bg-url" placeholder="https://...">
+                </div>
+
+                <div class="setting-group">
+                    <div class="setting-item">
+                        <label data-i18n="font">Font</label>
+                        <select id="set-font">
+                            <option value="sans">Inter (Modern)</option>
+                            <option value="serif">Playfair Display (Elegant)</option>
+                            <option value="mono">JetBrains Mono (Code)</option>
+                            <option value="digital">Orbitron (Sci-Fi)</option>
+                            <option value="retro">Righteous (Funky)</option>
+                            <option value="huge">Bebas Neue (Tall)</option>
+                            <option value="roboto">Roboto (Clean)</option>
+                            <option value="opensans">Open Sans (Readable)</option>
+                            <option value="lato">Lato (Friendly)</option>
+                            <option value="montserrat">Montserrat (Geometric)</option>
+                            <option value="raleway">Raleway (Elegant)</option>
+                            <option value="poppins">Poppins (Modern)</option>
+                            <option value="oswald">Oswald (Bold)</option>
+                            <option value="sourcesans">Source Sans Pro (Professional)</option>
+                            <option value="ubuntu">Ubuntu (Rounded)</option>
+                            <option value="nunito">Nunito (Soft)</option>
+                            <option value="rubik">Rubik (Geometric)</option>
+                            <option value="ptsans">PT Sans (Cyrillic)</option>
+                            <option value="merriweather">Merriweather (Serif)</option>
+                            <option value="lora">Lora (Serif)</option>
+                            <option value="crimson">Crimson Text (Serif)</option>
+                            <option value="libre">Libre Baskerville (Serif)</option>
+                            <option value="ptserif">PT Serif (Serif)</option>
+                            <option value="spacemono">Space Mono (Mono)</option>
+                            <option value="inconsolata">Inconsolata (Mono)</option>
+                            <option value="courier">Courier Prime (Mono)</option>
+                            <option value="pixel">Press Start 2P (Pixel)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <label data-i18n="flip_card_color">Flip Card Color</label>
+                    <input type="color" id="set-card-color" value="#222222">
+                </div>
+
+                <div class="setting-item">
+                    <label data-i18n="number_color">Number Color</label>
+                    <input type="color" id="set-num-color" value="#eeeeee">
+                </div>
+
+                <div class="setting-item">
+                    <label data-i18n="card_radius">Card Radius</label>
+                    <input type="range" id="set-radius" min="0" max="20" value="8">
+                </div>
+
+                <div class="setting-item">
+                    <label data-i18n="scale">Scale</label>
+                    <input type="range" id="set-scale" min="0.5" max="2.0" step="0.1" value="1.0">
+                </div>
+
+                <h3 data-i18n="effects">Effects</h3>
+                <div class="setting-item checkbox-row">
+                    <label for="set-grain" data-i18n="film_grain">Film Grain</label>
+                    <input type="checkbox" id="set-grain" checked>
+                </div>
+                <div class="setting-item checkbox-row">
+                    <label for="set-shadows" data-i18n="3d_shadows">3D Shadows</label>
+                    <input type="checkbox" id="set-shadows" checked>
+                </div>
+                <div class="setting-item checkbox-row">
+                    <label for="set-reflection" data-i18n="reflection">Reflection</label>
+                    <input type="checkbox" id="set-reflection">
+                </div>
+            </div>
+
+            <!-- Panel: Functional -->
+            <div class="settings-panel" id="panel-functional">
+                <h3 data-i18n="time_format">Time Format</h3>
+                <div class="setting-item checkbox-row">
+                    <label for="set-24h" data-i18n="24h_format">24-Hour Format</label>
+                    <input type="checkbox" id="set-24h" checked>
+                </div>
+                <div class="setting-item checkbox-row">
+                    <label for="set-seconds" data-i18n="show_seconds">Show Seconds</label>
+                    <input type="checkbox" id="set-seconds" checked>
+                </div>
+                <div class="setting-item checkbox-row">
+                    <label for="set-ampm" data-i18n="show_ampm">Show AM/PM</label>
+                    <input type="checkbox" id="set-ampm" checked>
+                </div>
+                <div class="setting-item checkbox-row">
+                    <label for="set-date" data-i18n="show_date">Show Date</label>
+                    <input type="checkbox" id="set-date" checked>
+                </div>
+                <div class="setting-item checkbox-row">
+                    <label for="set-padding" data-i18n="pad_zeros">Pad Zeros (09:05 vs 9:5)</label>
+                    <input type="checkbox" id="set-padding" checked>
+                </div>
+                <div class="setting-item checkbox-row">
+                    <label for="set-chime" data-i18n="hourly_chime">Hourly Chime "Ding"</label>
+                    <input type="checkbox" id="set-chime">
+                </div>
+            </div>
+
+            <!-- Panel: Productivity -->
+            <div class="settings-panel" id="panel-productivity">
+                <h3 data-i18n="timer_settings">Timer Settings</h3>
+                <div class="setting-item">
+                    <label data-i18n="pomodoro_min">Pomodoro (min)</label>
+                    <input type="number" id="set-pomo-time" value="25">
+                </div>
+                <div class="setting-item">
+                    <label data-i18n="short_break_min">Short Break (min)</label>
+                    <input type="number" id="set-short-break" value="5">
+                </div>
+                <div class="setting-item">
+                    <label data-i18n="long_break_min">Long Break (min)</label>
+                    <input type="number" id="set-long-break" value="15">
+                </div>
+
+                <div class="setting-item checkbox-row">
+                    <label for="set-autostart" data-i18n="autostart_breaks">Auto-start Breaks</label>
+                    <input type="checkbox" id="set-autostart">
+                </div>
+                <div class="setting-item checkbox-row">
+                    <label for="set-click-sound" data-i18n="mechanical_click_sound">Mechanical Click Sound</label>
+                    <input type="checkbox" id="set-click-sound" checked>
+                </div>
+                <div class="setting-item checkbox-row">
+                    <label for="set-notifications" data-i18n="desktop_notifications">Desktop Notifications</label>
+                    <input type="checkbox" id="set-notifications" checked>
+                </div>
+            </div>
+
+            <!-- Panel: Audio -->
+            <div class="settings-panel" id="panel-audio">
+                <h3 data-i18n="master_volume">Master Volume</h3>
+                <div class="setting-item">
+                    <label data-i18n="master_volume">Master Volume</label>
+                    <input type="range" id="vol-master" min="0" max="100" value="100">
+                    <div class="volume-display" id="vol-master-display">100%</div>
+                </div>
+                
+                <h3 data-i18n="ambience_mixer">Ambience Mixer</h3>
+                <!-- Sliders for different sounds -->
+                <div class="setting-item">
+                    <label data-i18n="audio_rain">Rain</label>
+                    <input type="range" id="vol-rain" min="0" max="100" value="0">
+                </div>
+                <div class="setting-item">
+                    <label data-i18n="audio_white_noise">White Noise</label>
+                    <input type="range" id="vol-white" min="0" max="100" value="0">
+                </div>
+                <div class="setting-item">
+                    <label data-i18n="audio_coffee_shop">Coffee Shop</label>
+                    <input type="range" id="vol-cafe" min="0" max="100" value="0">
+                </div>
+                <div class="setting-item">
+                    <label data-i18n="audio_fireplace">Fireplace</label>
+                    <input type="range" id="vol-fire" min="0" max="100" value="0">
+                </div>
+            </div>
+
+            <!-- Panel: System -->
+            <div class="settings-panel" id="panel-system">
+                <div class="setting-item">
+                    <button class="btn-primary" id="btn-export" data-i18n="export_settings">Export Settings
+                        (.json)</button>
+                </div>
+                <div class="setting-item">
+                    <button class="btn-secondary" id="btn-import" data-i18n="import_settings">Import Settings</button>
+                </div>
+                <div class="setting-item checkbox-row">
+                    <label for="set-saver" data-i18n="energy_saver">Energy Saver (Less Blur)</label>
+                    <input type="checkbox" id="set-saver">
+                </div>
+            </div>
+
+        </div>
+    </aside>
+
+    <!-- Audio Elements (Hidden) -->
+    <audio id="sfx-flip" src="assets/flip-click.mp3" preload="auto"></audio>
+    <audio id="sfx-alarm" src="assets/alarm.mp3" preload="auto"></audio>
+    <!-- Ambience loops would be loaded dynamically or here -->
+
+    <script src="script.js"></script>
+</body>
+
+</html>
