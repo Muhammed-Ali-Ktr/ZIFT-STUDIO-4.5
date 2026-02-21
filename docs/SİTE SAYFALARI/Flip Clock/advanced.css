@@ -1,0 +1,1422 @@
+/**
+ * advanced.css — Styles for Advanced Flip Clock Features
+ * All class names use fc-adv-* prefix to avoid conflicts with existing style.css
+ */
+
+/* ═══════════════════════════════════════════════════════
+   MILLISECONDS DISPLAY
+   ═══════════════════════════════════════════════════════ */
+.fc-adv-ms-display {
+    text-align: center;
+    font-family: var(--font-clock);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+    opacity: 0.45;
+    letter-spacing: 2px;
+    margin-top: 0.5rem;
+    display: none;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+/* ═══════════════════════════════════════════════════════
+   INFO BAR (UTC, Week, Day-of-Year)
+   ═══════════════════════════════════════════════════════ */
+.fc-adv-infobar {
+    display: none;
+    position: absolute;
+    top: 7rem;
+    width: 100%;
+    justify-content: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.fc-adv-chip {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-color);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 0.4rem 0.9rem;
+    border-radius: 50px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.fc-adv-chip:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.fc-adv-chip-ok {
+    border-color: rgba(80, 230, 120, 0.3);
+    color: #8ef5a8;
+}
+
+.fc-adv-chip-warn {
+    border-color: rgba(255, 190, 50, 0.3);
+    color: #ffce6e;
+}
+
+/* ═══════════════════════════════════════════════════════
+   TIME-OF-DAY BACKGROUND GRADIENTS
+   ═══════════════════════════════════════════════════════ */
+body.fc-tod-night {
+    background: radial-gradient(circle at center, #0a0a1a 0%, #000 100%) !important;
+}
+
+body.fc-tod-dawn {
+    background: linear-gradient(to bottom, #1d1a3c, #3c2a4d, #7d2a3a, #ff7e5f, #feb47b) !important;
+}
+
+body.fc-tod-morning {
+    background: linear-gradient(to bottom, #4facfe 0%, #00f2fe 100%) !important;
+}
+
+body.fc-tod-afternoon {
+    background: linear-gradient(to bottom, #2193b0, #6dd5ed) !important;
+}
+
+body.fc-tod-dusk {
+    background: linear-gradient(to bottom, #2c3e50, #000000) !important;
+}
+
+body.fc-tod-evening {
+    background: linear-gradient(to bottom, #141e30, #243b55) !important;
+}
+
+/* ═══════════════════════════════════════════════════════
+   WORLD CLOCKS PANEL
+   ═══════════════════════════════════════════════════════ */
+#fc-adv-world-panel {
+    display: none;
+    position: absolute;
+    left: 2.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 20;
+    background: rgba(20, 20, 35, 0.6);
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 1.5rem;
+    min-width: 220px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.fc-adv-world-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.fc-adv-world-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.8rem 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.fc-adv-world-primary {
+    background: rgba(var(--accent-rgb, 100, 100, 255), 0.15) !important;
+    border-color: rgba(var(--accent-rgb, 100, 100, 255), 0.4) !important;
+    box-shadow: 0 0 15px rgba(var(--accent-rgb, 100, 100, 255), 0.2);
+}
+
+.fc-adv-world-city {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    opacity: 0.5;
+}
+
+.fc-adv-world-time {
+    font-family: var(--font-clock);
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.fc-adv-world-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.8rem;
+    margin-top: 0.4rem;
+}
+
+.fc-adv-world-main-btn {
+    background: transparent;
+    border: none;
+    color: var(--accent-color);
+    cursor: pointer;
+    font-size: 1.2rem;
+    opacity: 0.6;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.fc-adv-world-main-btn:hover {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.fc-adv-world-remove {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: color 0.2s;
+}
+
+.fc-adv-world-remove:hover {
+    color: #ff5252;
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   SETTINGS PANEL REFINEMENTS
+   ═══════════════════════════════════════════════════════ */
+
+/* Grouping Card */
+.fc-adv-setting-group {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 1.2rem;
+    margin-bottom: 2rem;
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.fc-adv-setting-group:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.fc-adv-setting-group h3 {
+    margin-top: 0;
+    margin-bottom: 1.2rem;
+    color: var(--accent-color);
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.fc-adv-setting-group h3 i {
+    font-size: 1.1rem;
+    opacity: 0.8;
+}
+
+/* Compact Inputs for Settings */
+.settings-panel input[type="time"],
+.settings-panel input[type="datetime-local"],
+.settings-panel input[type="text"],
+.settings-panel input[type="number"],
+.settings-panel select {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+    color: #fff;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    transition: all 0.2s;
+}
+
+.settings-panel input:focus,
+.settings-panel select:focus {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--accent-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(var(--accent-rgb, 100, 100, 255), 0.1);
+}
+
+/* Custom Buttons in Settings */
+.fc-adv-btn {
+    width: 100%;
+    padding: 0.9rem;
+    border-radius: 10px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+}
+
+.fc-adv-btn-primary {
+    background: var(--accent-color);
+    color: #000;
+}
+
+.fc-adv-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(var(--accent-rgb, 100, 100, 255), 0.3);
+}
+
+.fc-adv-btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.fc-adv-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Weekday Selector */
+.fc-adv-alarm-weekdays-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.4rem;
+    margin: 1rem 0;
+}
+
+.fc-adv-weekday-btn {
+    flex: 1;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+}
+
+.fc-adv-weekday-btn.active {
+    background: var(--accent-color);
+    color: #000;
+    border-color: var(--accent-color);
+}
+
+/* Cards for lists (Alarms, World Clocks) */
+.fc-adv-card-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.fc-adv-list-item {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s;
+}
+
+.fc-adv-list-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Extra Panels (Stopwatch, Countdown) inline formatting */
+.fc-adv-inline-tool {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.fc-adv-tool-display {
+    font-family: var(--font-clock);
+    font-size: 2.2rem;
+    margin-bottom: 1.2rem;
+    color: var(--accent-color);
+    text-shadow: 0 0 20px rgba(var(--accent-rgb, 100, 100, 255), 0.3);
+}
+
+.fc-adv-tool-btns {
+    display: flex;
+    gap: 0.6rem;
+    justify-content: center;
+}
+
+.fc-adv-tool-btns button {
+    flex: 1;
+    max-width: 60px;
+}
+
+/* Multi-timer container */
+.fc-adv-mt-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.fc-adv-mt-item {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 0.8rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* ═══════════════════════════════════════════════════════
+   BINARY CLOCK
+   ═══════════════════════════════════════════════════════ */
+#fc-adv-binary {
+    display: none;
+    position: absolute;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 20;
+    background: rgba(15, 15, 25, 0.82);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 1.2rem;
+    display: none;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.35rem;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+}
+
+#fc-adv-binary.visible {
+    display: grid;
+}
+
+.fc-adv-binary-label {
+    text-align: center;
+    font-size: 0.55rem;
+    font-weight: 700;
+    opacity: 0.4;
+    letter-spacing: 1px;
+    margin-bottom: 0.2rem;
+}
+
+.fc-adv-binary-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background 0.15s, box-shadow 0.15s;
+    margin: 0 auto;
+}
+
+.fc-adv-binary-dot.on {
+    background: var(--accent-color);
+    box-shadow: 0 0 8px var(--accent-color);
+    border-color: transparent;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ANALOG CLOCK OVERLAY
+   ═══════════════════════════════════════════════════════ */
+#fc-adv-analog {
+    display: none;
+    position: absolute;
+    top: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 15;
+    text-align: center;
+}
+
+#fc-adv-analog.visible {
+    display: block;
+}
+
+.fc-adv-analog-svg {
+    width: 120px;
+    height: 120px;
+    filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.6));
+}
+
+.fc-adv-analog-face {
+    fill: rgba(20, 20, 30, 0.85);
+    stroke: rgba(255, 255, 255, 0.15);
+    stroke-width: 1.5;
+}
+
+.fc-adv-analog-tick {
+    stroke: rgba(255, 255, 255, 0.3);
+    stroke-width: 1;
+    stroke-linecap: round;
+}
+
+.fc-adv-analog-hour {
+    stroke: var(--text-color);
+    stroke-width: 3.5;
+    stroke-linecap: round;
+}
+
+.fc-adv-analog-minute {
+    stroke: var(--text-color);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+}
+
+.fc-adv-analog-second {
+    stroke: var(--accent-color);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+}
+
+.fc-adv-analog-center {
+    fill: var(--accent-color);
+}
+
+.fc-adv-analog-label {
+    font-size: 0.55rem;
+    opacity: 0.3;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+}
+
+/* ═══════════════════════════════════════════════════════
+   STOPWATCH
+   ═══════════════════════════════════════════════════════ */
+#fc-adv-panel-stopwatch {
+    margin-top: 1rem;
+    padding: 1.2rem;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.fc-adv-sw-display {
+    font-family: var(--font-clock);
+    font-size: 2.4rem;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 2px;
+    margin-bottom: 0.8rem;
+}
+
+.fc-adv-sw-btns {
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-bottom: 0.8rem;
+}
+
+.fc-adv-sw-laps {
+    max-height: 160px;
+    overflow-y: auto;
+}
+
+.fc-adv-lap-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.35rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    font-size: 0.82rem;
+}
+
+.fc-adv-lap-num {
+    opacity: 0.5;
+}
+
+.fc-adv-lap-time {
+    font-family: var(--font-clock);
+    font-weight: 700;
+}
+
+.fc-adv-lap-total {
+    opacity: 0.4;
+    font-size: 0.75rem;
+}
+
+/* ═══════════════════════════════════════════════════════
+   COUNTDOWN TIMER
+   ═══════════════════════════════════════════════════════ */
+#fc-adv-panel-countdown {
+    margin-top: 1rem;
+    padding: 1.2rem;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.fc-adv-cd-display {
+    font-family: var(--font-clock);
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 2px;
+    margin: 0.8rem 0;
+    transition: color 0.2s;
+}
+
+.fc-adv-countdown-alert {
+    color: var(--accent-color);
+    animation: fc-adv-flash 0.5s infinite;
+}
+
+.fc-adv-countdown-done {
+    color: #50e678;
+}
+
+@keyframes fc-adv-flash {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+}
+
+.fc-adv-cd-inputs {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-bottom: 0.8rem;
+}
+
+.fc-adv-cd-inputs input {
+    width: 60px !important;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 0.5rem !important;
+}
+
+.fc-adv-cd-btns {
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+}
+
+/* ═══════════════════════════════════════════════════════
+   TARGET DATE COUNTDOWN
+   ═══════════════════════════════════════════════════════ */
+#fc-adv-target-display {
+    display: none;
+    margin-top: 0.8rem;
+}
+
+.fc-adv-target-row {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.fc-adv-target-unit {
+    font-family: var(--font-clock);
+    font-size: 1.6rem;
+    font-weight: 700;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.fc-adv-target-unit small {
+    font-size: 0.6rem;
+    font-weight: 400;
+    opacity: 0.5;
+    font-family: var(--font-ui);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* ═══════════════════════════════════════════════════════
+   MULTI TIMER
+   ═══════════════════════════════════════════════════════ */
+#fc-adv-panel-multitimer {
+    margin-top: 1rem;
+    padding: 1.2rem;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.fc-adv-mt-add-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.8rem;
+}
+
+.fc-adv-mt-add-row input {
+    flex: 1;
+}
+
+#fc-adv-mt-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.fc-adv-mt-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 0.8rem;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.fc-adv-mt-name {
+    flex: 1;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.fc-adv-mt-display {
+    font-family: var(--font-clock);
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.fc-adv-mt-controls {
+    display: flex;
+    gap: 0.3rem;
+}
+
+.fc-adv-mt-controls button {
+    background: rgba(255, 255, 255, 0.07);
+    border: none;
+    border-radius: 6px;
+    color: var(--text-color);
+    font-size: 0.85rem;
+    padding: 0.25rem 0.45rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.fc-adv-mt-controls button:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.fc-adv-mt-del:hover {
+    color: #ff5252 !important;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ALARM LIST
+   ═══════════════════════════════════════════════════════ */
+.fc-adv-alarm-empty {
+    text-align: center;
+    opacity: 0.4;
+    font-size: 0.9rem;
+    padding: 1rem 0;
+}
+
+.fc-adv-alarm-item {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.7rem 0.9rem;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    margin-bottom: 0.5rem;
+    transition: opacity 0.3s;
+}
+
+.fc-adv-alarm-off {
+    opacity: 0.4;
+}
+
+.fc-adv-alarm-time {
+    font-family: var(--font-clock);
+    font-size: 1.3rem;
+    font-weight: 700;
+    min-width: 62px;
+}
+
+.fc-adv-alarm-info {
+    flex: 1;
+}
+
+.fc-adv-alarm-label {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 600;
+}
+
+.fc-adv-alarm-repeat {
+    display: block;
+    font-size: 0.72rem;
+    opacity: 0.5;
+    margin-top: 1px;
+}
+
+.fc-adv-alarm-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.fc-adv-alarm-del-btn {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 0;
+    transition: color 0.2s;
+}
+
+.fc-adv-alarm-del-btn:hover {
+    color: #ff5252;
+}
+
+/* Weekdays row */
+.fc-adv-alarm-weekdays-row {
+    display: none;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.8rem;
+}
+
+.fc-adv-alarm-weekdays-row label {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.8rem;
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+/* ─── Snooze Popup ─── */
+.fc-adv-snooze-popup {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.92);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.fc-adv-snooze-inner {
+    background: rgba(20, 20, 30, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 2.5rem 3rem;
+    text-align: center;
+    box-shadow: 0 16px 60px rgba(0, 0, 0, 0.8);
+}
+
+.fc-adv-snooze-icon {
+    font-size: 3.5rem;
+    margin-bottom: 0.5rem;
+    animation: ring 0.5s infinite;
+}
+
+@keyframes ring {
+
+    0%,
+    100% {
+        transform: rotate(-10deg);
+    }
+
+    50% {
+        transform: rotate(10deg);
+    }
+}
+
+.fc-adv-snooze-label {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+.fc-adv-snooze-btns {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SUN/MOON PANEL
+   ═══════════════════════════════════════════════════════ */
+#fc-adv-sunmoon {
+    display: none;
+    margin-top: 1rem;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.fc-adv-sunmoon-row {
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem;
+}
+
+.fc-adv-sunmoon-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.fc-adv-sunmoon-icon {
+    font-size: 1.8rem;
+}
+
+.fc-adv-sunmoon-val {
+    font-family: var(--font-clock);
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.fc-adv-sunmoon-lbl {
+    font-size: 0.68rem;
+    opacity: 0.5;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   AGE CALCULATOR
+   ═══════════════════════════════════════════════════════ */
+#fc-adv-age-result {
+    display: none;
+    margin-top: 1rem;
+}
+
+.fc-adv-age-card {
+    padding: 1.2rem;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    text-align: center;
+}
+
+.fc-adv-age-main {
+    font-family: var(--font-clock);
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.fc-adv-age-main span {
+    font-size: 1rem;
+    font-family: var(--font-ui);
+    opacity: 0.5;
+    vertical-align: middle;
+}
+
+.fc-adv-age-sub {
+    font-size: 0.85rem;
+    opacity: 0.6;
+    margin-top: 0.4rem;
+}
+
+.fc-adv-age-total {
+    font-size: 0.75rem;
+    opacity: 0.35;
+    margin-top: 0.2rem;
+}
+
+/* ═══════════════════════════════════════════════════════
+   TIME MACHINE
+   ═══════════════════════════════════════════════════════ */
+#fc-adv-panel-timemachine {
+    margin-top: 1rem;
+    padding: 1.2rem;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+#fc-adv-tm-indicator {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 50;
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid var(--accent-color);
+    border-radius: 8px;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.75rem;
+    color: var(--accent-color);
+    letter-spacing: 1px;
+}
+
+.fc-adv-tm-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+#fc-adv-tm-label {
+    font-family: var(--font-clock);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent-color);
+}
+
+/* ═══════════════════════════════════════════════════════
+   SPEED SIMULATION
+   ═══════════════════════════════════════════════════════ */
+#fc-adv-panel-speedsim {
+    display: none;
+    margin-top: 1rem;
+    padding: 1.2rem;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ═══════════════════════════════════════════════════════
+   NTP STATUS
+   ═══════════════════════════════════════════════════════ */
+#fc-adv-ntp-status {
+    display: none;
+    margin-top: 0.5rem;
+}
+
+/* ═══════════════════════════════════════════════════════
+   GENERAL BUTTONS (Advanced panels)
+   ═══════════════════════════════════════════════════════ */
+.fc-adv-btn {
+    padding: 0.55rem 1.1rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.fc-adv-btn-accent {
+    background: var(--accent-color);
+    color: #fff;
+}
+
+.fc-adv-btn-accent:hover {
+    filter: brightness(1.15);
+}
+
+.fc-adv-btn-secondary {
+    background: rgba(255, 255, 255, 0.07);
+    color: var(--text-color);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.fc-adv-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+/* ─── Small toggle (alarm list) ─── */
+.fc-adv-toggle-small {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    height: 19px;
+}
+
+.fc-adv-toggle-small input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.fc-adv-toggle-track {
+    position: absolute;
+    inset: 0;
+    background: #333;
+    border-radius: 34px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.fc-adv-toggle-track::before {
+    content: '';
+    position: absolute;
+    width: 13px;
+    height: 13px;
+    left: 3px;
+    bottom: 3px;
+    background: #fff;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.fc-adv-toggle-small input:checked+.fc-adv-toggle-track {
+    background: var(--accent-color);
+}
+
+.fc-adv-toggle-small input:checked+.fc-adv-toggle-track::before {
+    transform: translateX(15px);
+}
+
+/* ═══════════════════════════════════════════════════════
+   SETTINGS DRAWER WORLD CLOCK SECTION
+   ═══════════════════════════════════════════════════════ */
+.fc-adv-world-add-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.fc-adv-world-add-row .fc-adv-tz-select {
+    font-size: 0.82rem;
+}
+
+/* ═══════════════════════════════════════════════════════
+   DURATION CALCULATOR
+   ═══════════════════════════════════════════════════════ */
+#fc-adv-panel-duration {
+    margin-top: 1rem;
+    padding: 1.2rem;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+#fc-adv-dc-result {
+    font-family: var(--font-clock);
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 0.8rem;
+    color: var(--accent-color);
+}
+
+/* ═══════════════════════════════════════════════════════
+   TIMEZONE DISPLAY BADGE
+   ═══════════════════════════════════════════════════════ */
+#fc-adv-tz-display {
+    display: none;
+    margin-top: 0.5rem;
+    font-size: 0.82rem;
+    opacity: 0.55;
+}
+
+/* ═══════════════════════════════════════════════════════
+   PERFORMANCE MODE
+   ═══════════════════════════════════════════════════════ */
+body.fc-adv-perf * {
+    animation: none !important;
+    transition: none !important;
+}
+
+body.fc-adv-perf .flip-down .top {
+    animation: none !important;
+    transform: rotateX(-180deg) !important;
+}
+
+body.fc-adv-perf .flip-down .bottom-back {
+    animation: none !important;
+    transform: rotateX(0deg) !important;
+}
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE ADJUSTMENTS
+   ═══════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+    #fc-adv-world-panel,
+    #fc-adv-binary,
+    #fc-adv-analog {
+        display: none !important;
+    }
+
+    .fc-adv-ms-display {
+        font-size: 1.5rem;
+    }
+
+    .fc-adv-infobar {
+        top: 4.5rem;
+        gap: 0.4rem;
+    }
+
+    .fc-adv-chip {
+        font-size: 0.68rem;
+        padding: 0.25rem 0.55rem;
+    }
+
+    .fc-adv-sw-display {
+        font-size: 1.8rem;
+    }
+
+    .fc-adv-cd-display {
+        font-size: 1.5rem;
+    }
+}
+
+/* 
+   ADVANCED CLOCK DESIGNS
+    */
+
+/* 1. Glass Fusion (Glassmorphism) */
+#clock-container.adv-design-glass .top,
+#clock-container.adv-design-glass .bottom,
+#clock-container.adv-design-glass .top-back,
+#clock-container.adv-design-glass .bottom-back {
+    background: rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(25px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(25px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37) !important;
+}
+
+#clock-container.adv-design-glass .flip-card {
+    box-shadow: none !important;
+}
+
+#clock-container.adv-design-glass .top,
+#clock-container.adv-design-glass .top-back {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+/* 2. Ethereal Glow (Phantom) */
+#clock-container.adv-design-phantom .top,
+#clock-container.adv-design-phantom .bottom,
+#clock-container.adv-design-phantom .top-back,
+#clock-container.adv-design-phantom .bottom-back {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+#clock-container.adv-design-phantom .flip-card {
+    text-shadow: 0 0 20px var(--accent-color), 0 0 40px var(--accent-color), 0 0 60px var(--accent-color) !important;
+    box-shadow: none !important;
+}
+
+#clock-container.adv-design-phantom .separator {
+    text-shadow: 0 0 15px var(--accent-color) !important;
+    opacity: 0.8 !important;
+}
+
+/* 3. Brutalist Raw */
+#clock-container.adv-design-brutalist .top,
+#clock-container.adv-design-brutalist .bottom,
+#clock-container.adv-design-brutalist .top-back,
+#clock-container.adv-design-brutalist .bottom-back {
+    background: #000 !important;
+    border: 4px solid #fff !important;
+    color: #fff !important;
+    border-radius: 0 !important;
+}
+
+#clock-container.adv-design-brutalist .flip-card {
+    box-shadow: 15px 15px 0px rgba(255, 255, 255, 0.2) !important;
+    border-radius: 0 !important;
+}
+
+#clock-container.adv-design-brutalist .flip-group {
+    border-radius: 0 !important;
+}
+
+#clock-container.adv-design-brutalist .separator {
+    font-weight: 900 !important;
+    opacity: 1 !important;
+    color: #fff !important;
+}
+
+/* 4. Cyber Matrix */
+#clock-container.adv-design-matrix .top,
+#clock-container.adv-design-matrix .bottom,
+#clock-container.adv-design-matrix .top-back,
+#clock-container.adv-design-matrix .bottom-back {
+    background: #001a00 !important;
+    border: 1px solid #00ff00 !important;
+    color: #00ff00 !important;
+    font-family: 'Courier Prime', monospace !important;
+}
+
+#clock-container.adv-design-matrix .flip-card {
+    text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00 !important;
+    box-shadow: inset 0 0 10px #001a00 !important;
+}
+
+#clock-container.adv-design-matrix::after {
+    content: "" !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%,
+            rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg,
+            rgba(255, 0, 0, 0.06),
+            rgba(0, 255, 0, 0.02),
+            rgba(0, 0, 255, 0.06)) !important;
+    z-index: 2 !important;
+    background-size: 100% 4px, 3px 100% !important;
+    pointer-events: none !important;
+    opacity: 0.3 !important;
+}
+
+/* ═══════════════════════════════════════════════════════
+   VISUAL DESIGN GALLERY
+   ═══════════════════════════════════════════════════════ */
+.fc-adv-design-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.fc-adv-design-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.fc-adv-design-card:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    border-color: rgba(var(--accent-rgb, 255, 82, 82), 0.5);
+}
+
+.fc-adv-design-card.active {
+    background: rgba(var(--accent-rgb, 255, 82, 82), 0.15);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 15px rgba(var(--accent-rgb, 255, 82, 82), 0.2);
+}
+
+.design-preview {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-clock);
+    font-size: 1.5rem;
+    font-weight: 700;
+    pointer-events: none;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.fc-adv-design-card span {
+    font-size: 0.75rem;
+    font-weight: 600;
+    opacity: 0.8;
+}
+
+/* Previews */
+.preview-default {
+    background: #222;
+    color: #fff;
+}
+
+.preview-glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    color: #fff;
+}
+
+.preview-phantom {
+    background: transparent;
+    color: var(--accent-color);
+    text-shadow: 0 0 10px var(--accent-color);
+}
+
+.preview-brutalist {
+    background: #000;
+    border: 2px solid #fff;
+    color: #fff;
+    border-radius: 0;
+}
+
+.preview-matrix {
+    background: #001a00;
+    color: #00ff00;
+    text-shadow: 0 0 5px #00ff00;
+    font-family: 'Courier Prime', monospace;
+}
+
+.preview-neon {
+    background: #0d001a;
+    color: #00ffff;
+    text-shadow: 0 0 8px #00ffff, 0 0 15px #ff00ff;
+    border-color: #ff00ff;
+}
+
+/* 5. Neon Nights Style */
+#clock-container.adv-design-neon .top,
+#clock-container.adv-design-neon .bottom,
+#clock-container.adv-design-neon .top-back,
+#clock-container.adv-design-neon .bottom-back {
+    background: rgba(13, 0, 26, 0.8) !important;
+    backdrop-filter: blur(15px) !important;
+    -webkit-backdrop-filter: blur(15px) !important;
+    border: 2px solid #ff00ff !important;
+    color: #00ffff !important;
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.5), inset 0 0 10px rgba(0, 255, 255, 0.3) !important;
+}
+
+#clock-container.adv-design-neon .flip-card {
+    text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff !important;
+    box-shadow: 0 0 30px rgba(255, 0, 255, 0.4) !important;
+}
+
+#clock-container.adv-design-neon .separator {
+    color: #ff00ff !important;
+    text-shadow: 0 0 15px #ff00ff !important;
+}
+
+@media (max-width: 768px) {
+    .fc-adv-design-gallery {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChronoFocus | Pro Flip Clock & Timer</title>
+    <!-- Preconnect for fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Google Fonts: Inter (UI), and various display fonts for the clock -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;700&family=Abril+Fatface&family=Bebas+Neue&family=Orbitron:wght@400;700&family=Playfair+Display:wght@400;700&family=Righteous&family=Roboto+Mono:wght@400;700&family=Roboto:wght@400;700&family=Open+Sans:wght@400;700&family=Lato:wght@400;700&family=Montserrat:wght@400;700&family=Raleway:wght@400;700&family=Poppins:wght@400;700&family=Oswald:wght@400;700&family=Source+Sans+Pro:wght@400;700&family=Ubuntu:wght@400;700&family=Nunito:wght@400;700&family=Rubik:wght@400;700&family=PT+Sans:wght@400;700&family=Merriweather:wght@400;700&family=Lora:wght@400;700&family=Crimson+Text:wght@400;700&family=Libre+Baskerville:wght@400;700&family=PT+Serif:wght@400;700&family=Space+Mono:wght@400;700&family=Inconsolata:wght@400;700&family=Courier+Prime:wght@400;700&family=Press+Start+2P&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="advanced.css">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+
+<body>
+
+    <!-- App Background & Effects -->
+    <div id="app-background" class="background-layer"></div>
+    <video id="bg-video" class="background-video" loop muted playsinline></video>
+    <div id="app-grain" class="grain-layer"></div>
+    <div id="app-vignette" class="vignette-layer"></div>
+
+    <!-- Main Application Container -->
+    <main id="app">
+
+        <!-- Top Info Bar (Timer Info / Date) -->
+        <header id="top-bar" class="ui-element">
+            <div class="current-date" id="date-display">Monday, October 24</div>
+            <div class="timer-status hidden" id="timer-status">
+                <span class="badge" id="mode-badge" data-i18n="pomodoro">Pomodoro</span>
+                <span class="lap-count" id="lap-count" data-i18n-round-prefix="round">Round 1/4</span>
+            </div>
+        </header>
+
+        <!-- The Flip Clock -->
+        <div id="clock-container">
+            <!-- Hours -->
+            <div class="flip-group" id="group-hours">
+                <div class="flip-card" data-value="00">
+                    <div class="top">00</div>
+                    <div class="bottom">00</div>
+                    <div class="top-back">00</div>
+                    <div class="bottom-back">00</div>
+                </div>
+            </div>
+
+            <!-- Separator -->
+            <div class="separator">:</div>
+
+            <!-- Minutes -->
+            <div class="flip-group" id="group-minutes">
+                <div class="flip-card" data-value="00">
+                    <div class="top">00</div>
+                    <div class="bottom">00</div>
+                    <div class="top-back">00</div>
+                    <div class="bottom-back">00</div>
+                </div>
+            </div>
+
+            <!-- Seconds (Optional) -->
+            <div class="separator sec-separator">:</div>
+            <div class="flip-group" id="group-seconds">
+                <div class="flip-card" data-value="00">
+                    <div class="top">00</div>
+                    <div class="bottom">00</div>
+                    <div class="top-back">00</div>
+                    <div class="bottom-back">00</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AM/PM Indicator -->
+        <div id="meridiem" class="meridiem ui-element">AM</div>
+
+        <!-- Bottom Controls -->
+        <div id="bottom-controls" class="ui-element">
+            <div class="control-group">
+                <button id="btn-mode" title="Switch Mode" data-i18n-title="switch_mode"><i
+                        class="ph ph-timer"></i></button>
+                <button id="btn-play-pause" title="Start/Pause" data-i18n-title="start_pause"><i
+                        class="ph ph-play"></i></button>
+                <button id="btn-reset" title="Reset Timer" data-i18n-title="reset_timer"><i
+                        class="ph ph-arrow-counter-clockwise"></i></button>
+            </div>
+
+            <div class="control-group center-group">
+                <div class="focus-message" id="focus-message" data-i18n="stay_focused">Stay Focused</div>
+            </div>
+
+            <div class="control-group">
+                <button id="btn-audio" title="Ambience Mixer" data-i18n-title="ambience"><i
+                        class="ph ph-speaker-high"></i></button>
+                <button id="btn-settings" title="Settings" data-i18n-title="settings"><i
+                        class="ph ph-gear"></i></button>
+                <button id="btn-fullscreen" title="Fullscreen" data-i18n-title="fullscreen"><i
+                        class="ph ph-corners-out"></i></button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Advanced Overlays (hidden by default, shown via JS) -->
+    <div id="fc-adv-world-panel" class="fc-adv-world-panel">
+        <div class="fc-adv-world-list"></div>
+    </div>
+    <div id="fc-adv-binary"></div>
+    <div id="fc-adv-analog"></div>
+    <div id="fc-adv-sunmoon" style="display:none;"></div>
+    <div id="fc-adv-age-result" style="display:none;"></div>
+    <div id="fc-adv-tm-indicator" data-i18n="time_machine_label">⏳ TIME MACHINE ACTIVE</div>
+
+    <!-- Settings Drawer -->
+    <aside id="settings-drawer" class="drawer">
+        <div class="drawer-header">
+            <h2 data-i18n="settings">Settings</h2>
+            <button id="btn-close-settings" class="close-btn"><i class="ph ph-x"></i></button>
+        </div>
+
+        <div class="drawer-content">
+            <!-- Tabs -->
+            <div class="settings-tabs">
+                <button class="tab-btn active" data-tab="visual" title="Visual Settings"
+                    data-fc-i18n-title="tab_visual"><i class="ph ph-palette"></i></button>
+                <button class="tab-btn" data-tab="functional" title="Time Format" data-fc-i18n-title="tab_time"><i
+                        class="ph ph-clock"></i></button>
+                <button class="tab-btn" data-tab="productivity" title="Focus Timer" data-fc-i18n-title="tab_focus"><i
+                        class="ph ph-target"></i></button>
+                <button class="tab-btn" data-tab="audio" title="Audio Mixer" data-fc-i18n-title="tab_audio"><i
+                        class="ph ph-speaker-high"></i></button>
+                <button class="tab-btn" data-tab="system" title="System Settings" data-fc-i18n-title="tab_system"><i
+                        class="ph ph-gear"></i></button>
+                <button class="tab-btn" data-tab="alarms" title="Alarms" data-fc-i18n-title="tab_alarms"><i
+                        class="ph ph-alarm"></i></button>
+                <button class="tab-btn" data-tab="world" title="World Time" data-fc-i18n-title="tab_world"><i
+                        class="ph ph-globe"></i></button>
+                <button class="tab-btn" data-tab="advanced" title="Advanced Features"
+                    data-fc-i18n-title="tab_advanced"><i class="ph ph-unite"></i></button>
+                <button class="tab-btn" data-tab="extra" title="Extra Tools" data-fc-i18n-title="tab_extra"><i
+                        class="ph ph-dots-three-circle"></i></button>
+            </div>
+
+            <!-- Panel: Visual -->
+            <div class="settings-panel active" id="panel-visual">
+                <!-- Appearance Group -->
+                <div class="fc-adv-setting-group">
+                    <h3><i class="ph ph-paint-brush"></i> <span data-i18n="theme_appearance">Appearance</span></h3>
+
+                    <div class="setting-item">
+                        <label data-i18n="language">Language / Dil</label>
+                        <div class="toggle-switch-container">
+                            <span class="toggle-label">EN</span>
+                            <label class="switch">
+                                <input type="checkbox" id="set-language">
+                                <span class="slider round"></span>
+                            </label>
+                            <span class="toggle-label">TR</span>
+                        </div>
+                    </div>
+
+                    <div class="setting-item">
+                        <label data-i18n="theme_preset">Theme Preset</label>
+                        <select id="set-theme">
+                            <option value="dark" data-i18n="dark_modern">Dark Modern</option>
+                            <option value="light" data-i18n="soft_light">Soft Light</option>
+                            <option value="retro" data-i18n="retro_orange">Retro Orange</option>
+                            <option value="cyberpunk" data-i18n="cyberpunk_neon">Cyberpunk Neon</option>
+                            <option value="forest" data-i18n="forest_zen">Forest Zen</option>
+                            <option value="sepia" data-i18n="vintage_sepia">Vintage Sepia</option>
+                        </select>
+                    </div>
+
+                    <div class="setting-item">
+                        <label data-i18n="background_url">Background URL</label>
+                        <input type="text" id="set-bg-url" placeholder="https://..."
+                            data-i18n-placeholder="background_url">
+                    </div>
+
+                    <div class="setting-item">
+                        <label data-i18n="font">Typography</label>
+                        <select id="set-font">
+                            <option value="sans" data-i18n="font_sans">Inter (Modern)</option>
+                            <option value="serif" data-i18n="font_serif">Playfair Display (Elegant)</option>
+                            <option value="mono" data-i18n="font_mono">JetBrains Mono (Code)</option>
+                            <option value="digital" data-i18n="font_digital">Orbitron (Sci-Fi)</option>
+                            <option value="retro" data-i18n="font_retro">Righteous (Funky)</option>
+                            <option value="huge" data-i18n="font_huge">Bebas Neue (Tall)</option>
+                            <option value="roboto" data-i18n="font_roboto">Roboto (Clean)</option>
+                            <option value="opensans" data-i18n="font_opensans">Open Sans (Readable)</option>
+                            <option value="lato" data-i18n="font_lato">Lato (Friendly)</option>
+                            <option value="montserrat" data-i18n="font_montserrat">Montserrat (Geometric)</option>
+                            <option value="raleway" data-i18n="font_raleway">Raleway (Elegant)</option>
+                            <option value="poppins" data-i18n="font_poppins">Poppins (Modern)</option>
+                            <option value="oswald" data-i18n="font_oswald">Oswald (Bold)</option>
+                            <option value="sourcesans" data-i18n="font_sourcesans">Source Sans Pro (Professional)
+                            </option>
+                            <option value="ubuntu" data-i18n="font_ubuntu">Ubuntu (Rounded)</option>
+                            <option value="nunito" data-i18n="font_nunito">Nunito (Soft)</option>
+                            <option value="rubik" data-i18n="font_rubik">Rubik (Geometric)</option>
+                            <option value="ptsans" data-i18n="font_ptsans">PT Sans (Cyrillic)</option>
+                            <option value="merriweather" data-i18n="font_merriweather">Merriweather (Serif)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Colors & Styling -->
+                <div class="fc-adv-setting-group">
+                    <h3><i class="ph ph-palette"></i> <span data-i18n="style_colors">Colors & Styling</span></h3>
+                    <div class="setting-item">
+                        <label data-i18n="flip_card_color">Flip Card Color</label>
+                        <input type="color" id="set-card-color" value="#222222">
+                    </div>
+                    <div class="setting-item">
+                        <label data-i18n="number_color">Number Color</label>
+                        <input type="color" id="set-num-color" value="#eeeeee">
+                    </div>
+                    <div class="setting-item">
+                        <label data-i18n="card_radius">Card Corner Radius</label>
+                        <input type="range" id="set-radius" min="0" max="20" value="8">
+                    </div>
+                </div>
+
+                <!-- Layout & Motion -->
+                <div class="fc-adv-setting-group">
+                    <h3><i class="ph ph-bounding-box"></i> <span data-i18n="layout_motion">Layout & Scale</span></h3>
+                    <div class="setting-item">
+                        <label data-i18n="scale">Override Scale</label>
+                        <input type="range" id="set-scale" min="0.5" max="2.0" step="0.1" value="1.0">
+                    </div>
+                </div>
+
+                <!-- Visual Effects -->
+                <div class="fc-adv-setting-group">
+                    <h3><i class="ph ph-sparkle"></i> <span data-i18n="effects">Visual Effects</span></h3>
+                    <div class="setting-item checkbox-row">
+                        <label for="set-grain" data-i18n="film_grain">Film Grain Texture</label>
+                        <input type="checkbox" id="set-grain" checked>
+                    </div>
+                    <div class="setting-item checkbox-row">
+                        <label for="set-shadows" data-i18n="3d_shadows">Deep 3D Shadows</label>
+                        <input type="checkbox" id="set-shadows" checked>
+                    </div>
+                    <div class="setting-item checkbox-row">
+                        <label for="set-reflection" data-i18n="reflection">Glass Reflection</label>
+                        <input type="checkbox" id="set-reflection">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel: Functional -->
+            <div class="settings-panel" id="panel-functional">
+                <!-- Data Format Group -->
+                <div class="fc-adv-setting-group">
+                    <h3><i class="ph ph-clock"></i> <span data-i18n="time_format">Time Format</span></h3>
+                    <div class="setting-item checkbox-row">
+                        <label for="set-24h" data-i18n="24h_format">24-Hour Format</label>
+                        <input type="checkbox" id="set-24h" checked>
+                    </div>
+                    <div class="setting-item checkbox-row">
+                        <label for="set-seconds" data-i18n="show_seconds">Show Seconds</label>
+                        <input type="checkbox" id="set-seconds" checked>
+                    </div>
+                    <div class="setting-item checkbox-row">
+                        <label for="set-ampm" data-i18n="show_ampm">Show AM/PM</label>
+                        <input type="checkbox" id="set-ampm" checked>
+                    </div>
+                    <div class="setting-item checkbox-row">
+                        <label for="set-padding" data-i18n="pad_zeros">Pad Zeros (09:05)</label>
+                        <input type="checkbox" id="set-padding" checked>
+                    </div>
+                </div>
+
+                <!-- Date & Indicators -->
+                <div class="fc-adv-setting-group">
+                    <h3><i class="ph ph-calendar"></i> <span data-i18n="date_indicators">Date & Alerts</span></h3>
+                    <div class="setting-item checkbox-row">
+                        <label for="set-date" data-i18n="show_date">Show Current Date</label>
+                        <input type="checkbox" id="set-date" checked>
+                    </div>
+                    <div class="setting-item checkbox-row">
+                        <label for="set-chime" data-i18n="hourly_chime">Hourly Chime "Ding"</label>
+                        <input type="checkbox" id="set-chime">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel: Productivity -->
+            <div class="settings-panel" id="panel-productivity">
+                <!-- Pomodoro Engine -->
+                <div class="fc-adv-setting-group">
+                    <h3><i class="ph ph-timer"></i> <span data-i18n="timer_settings">Timer Settings</span></h3>
+                    <div class="setting-item">
+                        <label data-i18n="pomodoro_min">Pomodoro (min)</label>
+                        <input type="number" id="set-pomo-time" value="25">
+                    </div>
+                    <div class="setting-item">
+                        <label data-i18n="short_break_min">Short Break (min)</label>
+                        <input type="number" id="set-short-break" value="5">
+                    </div>
+                    <div class="setting-item">
+                        <label data-i18n="long_break_min">Long Break (min)</label>
+                        <input type="number" id="set-long-break" value="15">
+                    </div>
+                </div>
+
+                <!-- Logic & Notifications -->
+                <div class="fc-adv-setting-group">
+                    <h3><i class="ph ph-activity"></i> <span data-i18n="productivity_logic">Efficiency & Alerts</span>
+                    </h3>
+                    <div class="setting-item checkbox-row">
+                        <label for="set-autostart" data-i18n="autostart_breaks">Auto-start Breaks</label>
+                        <input type="checkbox" id="set-autostart">
+                    </div>
+                    <div class="setting-item checkbox-row">
+                        <label for="set-click-sound" data-i18n="mechanical_click_sound">Mechanical Click SFX</label>
+                        <input type="checkbox" id="set-click-sound" checked>
+                    </div>
+                    <div class="setting-item checkbox-row">
+                        <label for="set-notifications" data-i18n="desktop_notifications">Desktop Notifications</label>
+                        <input type="checkbox" id="set-notifications" checked>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel: Audio -->
+            <div class="settings-panel" id="panel-audio">
+                <!-- Master Controls -->
+                <div class="fc-adv-setting-group">
+                    <h3><i class="ph ph-speaker-hifi"></i> <span data-i18n="master_audio">Audio Control</span></h3>
+                    <div class="setting-item">
+                        <label data-i18n="master_volume">Master Volume</label>
+                        <input type="range" id="vol-master" min="0" max="100" value="100">
+                        <div class="volume-display" id="vol-master-display">100%</div>
+                    </div>
+                </div>
+
+                <!-- Ambience Mixer -->
+                <div class="fc-adv-setting-group">
+                    <h3><i class="ph ph-waves"></i> <span data-i18n="ambience_mixer">Ambience Mixer</span></h3>
+                    <div class="setting-item">
+                        <label data-i18n="audio_rain">Raindrops</label>
+                        <input type="range" id="vol-rain" min="0" max="100" value="0">
+                    </div>
+                    <div class="setting-item">
+                        <label data-i18n="audio_rain1">Rain - Soft</label>
+                        <input type="range" id="vol-rain1" min="0" max="100" value="0">
+                    </div>
+                    <div class="setting-item">
+                        <label data-i18n="audio_rain2">Rain - Heavy</label>
+                        <input type="range" id="vol-rain2" min="0" max="100" value="0">
+                    </div>
+                    <div class="setting-item">
+                        <label data-i18n="audio_rain3">Rain - Storm</label>
+                        <input type="range" id="vol-rain3" min="0" max="100" value="0">
+                    </div>
+                    <div class="setting-item">
+                        <label data-i18n="audio_white_noise">White Noise</label>
+                        <input type="range" id="vol-white" min="0" max="100" value="0">
+                    </div>
+                    <div class="setting-item">
+                        <label data-i18n="audio_coffee_shop">Coffee Shop</label>
+                        <input type="range" id="vol-cafe" min="0" max="100" value="0">
+                    </div>
+                    <div class="setting-item">
+                        <label data-i18n="audio_fireplace">Crackling Fire</label>
+                        <input type="range" id="vol-fire" min="0" max="100" value="0">
+                    </div>
+                    <div class="setting-item">
+                        <label data-i18n="audio_fire1">Fire - Gentle</label>
+                        <input type="range" id="vol-fire1" min="0" max="100" value="0">
+                    </div>
+                    <div class="setting-item">
+                        <label data-i18n="audio_fire2">Fire - Cozy</label>
+                        <input type="range" id="vol-fire2" min="0" max="100" value="0">
+                    </div>
+                    <div class="setting-item">
+                        <label data-i18n="audio_fire3">Fire - Intense</label>
+                        <input type="range" id="vol-fire3" min="0" max="100" value="0">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel: System -->
+            <div class="settings-panel" id="panel-system">
+                <!-- Backup & Restore -->
+                <div class="fc-adv-setting-group">
+                    <h3><i class="ph ph-database"></i> <span data-i18n="settings_maintenance">Maintenance</span></h3>
+                    <div class="setting-item" style="display:flex; gap:0.8rem;">
+                        <button class="fc-adv-btn fc-adv-btn-primary" id="btn-export" data-i18n="export_settings">
+                            <i class="ph ph-export"></i> Export
+                        </button>
+                        <button class="fc-adv-btn fc-adv-btn-secondary" id="btn-import" data-i18n="import_settings">
+                            <i class="ph ph-import"></i> Import
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Performance -->
+                <div class="fc-adv-setting-group">
+                    <h3><i class="ph ph-lightning"></i> <span data-i18n="system_perf">Performance</span></h3>
+                    <div class="setting-item checkbox-row">
+                        <label for="set-saver" data-i18n="energy_saver">Energy Saver (Less Blur)</label>
+                        <input type="checkbox" id="set-saver">
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ PANEL: ALARMS ═══ -->
+            <div class="settings-panel" id="panel-alarms">
+                <!-- Add New Alarm Group -->
+                <div class="fc-adv-setting-group">
+                    <h3><i class="ph ph-alarm-plus"></i> <span data-fc-i18n="add_alarm">Add Alarm</span></h3>
+
+                    <div class="setting-item">
+                        <label data-fc-i18n="alarm_time">Time</label>
+                        <input type="time" id="fc-adv-alarm-time">
+                    </div>
+                    <div class="setting-item">
+                        <label data-fc-i18n="alarm_label">Label</label>
+                        <input type="text" id="fc-adv-alarm-label" placeholder="Alarm Name"
+                            data-fc-i18n-placeholder="alarm_label">
+                    </div>
+                    <div class="setting-item">
+                        <label data-fc-i18n="alarm_repeat">Repeat</label>
+                        <select id="fc-adv-alarm-repeat">
+                            <option value="once" data-fc-i18n="repeat_once">Once</option>
+                            <option value="daily" data-fc-i18n="repeat_daily">Daily</option>
+                            <option value="weekly" data-fc-i18n="repeat_weekly">Weekly</option>
+                        </select>
+                    </div>
+
+                    <!-- Weekday Selection (shown when weekly selected) -->
+                    <div id="fc-adv-alarm-weekdays" class="fc-adv-alarm-weekdays-row" style="display:none;">
+                        <div class="fc-adv-weekday-btn" data-day="1" data-i18n="monday_short">M</div>
+                        <div class="fc-adv-weekday-btn" data-day="2" data-i18n="tuesday_short">T</div>
+                        <div class="fc-adv-weekday-btn" data-day="3" data-i18n="wednesday_short">W</div>
+                        <div class="fc-adv-weekday-btn" data-day="4" data-i18n="thursday_short">T</div>
+                        <div class="fc-adv-weekday-btn" data-day="5" data-i18n="friday_short">F</div>
+                        <div class="fc-adv-weekday-btn" data-day="6" data-i18n="saturday_short">S</div>
+                        <div class="fc-adv-weekday-btn" data-day="0" data-i18n="sunday_short">S</div>
+                    </div>
+
+                    <div class="setting-item checkbox-row" style="margin-top:1rem">
+                        <label data-fc-i18n="alarm_vibrate">Vibration</label>
+                        <input type="checkbox" id="fc-set-alarm-vib" checked>
+                    </div>
+
+                    <button class="fc-adv-btn fc-adv-btn-primary" id="fc-adv-alarm-add">
+                        <i class="ph ph-plus"></i> <span data-fc-i18n="add_alarm">Create Alarm</span>
+                    </button>
+                </div>
+
+                <!-- Active Alarms Group -->
+                <div class="fc-adv-setting-group">
+                    <h3><i class="ph ph-list-checks"></i> <span data-fc-i18n="active_alarms">Active Alarms</span></h3>
+                    <div id="fc-adv-alarm-list" class="fc-adv-card-list"></div>
+                </div>
+            </div>
+
+            <!-- ═══ PANEL: WORLD ═══ -->
+            <div class="settings-panel" id="panel-world">
+                <!-- World Clock Selection -->
+                <div class="fc-adv-setting-group">
+                    <h3><i class="ph ph-globe-hemisphere-east"></i> <span data-fc-i18n="world_clocks">World
+                            Clocks</span>
+                    </h3>
+                    <div class="setting-item checkbox-row">
+                        <label data-fc-i18n="world_clocks">Display World Clocks</label>
+                        <input type="checkbox" id="fc-set-worldclocks">
+                    </div>
+
+                    <div class="fc-adv-world-add-row" style="margin-top:1.5rem">
+                        <div class="setting-item">
+                            <label data-fc-i18n="city_name">City Name</label>
+                            <input type="text" id="fc-adv-world-city" placeholder="e.g. London"
+                                data-fc-i18n-placeholder="city_name">
+                        </div>
+                        <div class="setting-item">
+                            <label data-fc-i18n="timezone">Timezone</label>
+                            <select id="fc-adv-world-tz" class="fc-adv-tz-select">
+                                <option value="UTC" data-fc-i18n="tz_utc">UTC (GMT)</option>
+                                <option value="America/New_York" data-fc-i18n="tz_ny">New York (EST)</option>
+                                <option value="Europe/London" data-fc-i18n="tz_london">London (GMT/BST)</option>
+                                <option value="Europe/Istanbul" data-fc-i18n="tz_ist">Istanbul (TRT)</option>
+                                <option value="Asia/Tokyo" data-fc-i18n="tz_tokyo">Tokyo (JST)</option>
+                                <option value="Asia/Dubai" data-fc-i18n="tz_dubai">Dubai (GST)</option>
+                                <option value="Australia/Sydney" data-fc-i18n="tz_sydney">Sydney (AEST)</option>
+                                <option value="America/Los_Angeles" data-fc-i18n="tz_la">Los Angeles (PST)</option>
+                                <option value="Europe/Paris" data-fc-i18n="tz_paris">Paris (CET)</option>
+                                <option value="Asia/Shanghai" data-fc-i18n="tz_shanghai">Shanghai (CST)</option>
+                            </select>
+                        </div>
+                        <button class="fc-adv-btn fc-adv-btn-secondary" id="fc-adv-world-add">
+                            <i class="ph ph-plus"></i> <span data-fc-i18n="add_city">Add to List</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Timezone Auto Detect -->
+                <div class="fc-adv-setting-group">
+                    <h3><i class="ph ph-intersect"></i> <span data-fc-i18n="timezone_sync">Timezone Sync</span></h3>
+                    <div class="setting-item checkbox-row">
+                        <label data-fc-i18n="auto_timezone">Auto-detect Local Timezone</label>
+                        <input type="checkbox" id="fc-set-autotz" checked>
+                    </div>
+                    <div id="fc-adv-tz-display" class="fc-adv-chip fc-adv-chip-ok"
+                        style="display:inline-block; margin-top:0.5rem">--</div>
+                </div>
+            </div>
+
+            <!-- ═══ PANEL: ADVANCED ═══ -->
+            <div class="settings-panel" id="panel-advanced">
+                <!-- Time Display Group -->
+                <div class="fc-adv-setting-group">
+                    <h3><i class="ph ph-clock-countdown"></i> <span data-fc-i18n="time_display">Time Display</span></h3>
+                    <div class="setting-item checkbox-row">
+                        <label data-fc-i18n="show_ms">Milliseconds</label>
+                        <input type="checkbox" id="fc-set-ms">
+                    </div>
+                    <div class="setting-item checkbox-row">
+                        <label data-fc-i18n="show_utc">UTC / GMT Bar</label>
+                        <input type="checkbox" id="fc-set-utc">
+                    </div>
+                    <div class="setting-item checkbox-row">
+                        <label data-fc-i18n="show_weeknum">Week Number</label>
+                        <input type="checkbox" id="fc-set-weeknum">
+                    </div>
+                    <div class="setting-item checkbox-row">
+                        <label data-fc-i18n="show_dayofyear">Day of Year</label>
+                        <input type="checkbox" id="fc-set-dayofyear">
+                    </div>
+                </div>
+
+                <!-- Visual Style Group -->
+                <div class="fc-adv-setting-group">
+                    <h3><i class="ph ph-palette"></i> <span data-fc-i18n="visual_styles">Visual Styles</span></h3>
+
+                    <div class="setting-item">
+                        <label data-fc-i18n="design_selection">Advanced Style Selection</label>
+                        <div id="fc-adv-design-gallery" class="fc-adv-design-gallery">
+                            <div class="fc-adv-design-card active" data-design="default" title="Original Flip">
+                                <div class="design-preview preview-default">00</div>
+                                <span data-fc-i18n="design_default">Original</span>
+                            </div>
+                            <div class="fc-adv-design-card" data-design="glass" title="Glass Fusion">
+                                <div class="design-preview preview-glass">00</div>
+                                <span data-fc-i18n="design_glass">Glass</span>
+                            </div>
+                            <div class="fc-adv-design-card" data-design="phantom" title="Ethereal Glow">
+                                <div class="design-preview preview-phantom">00</div>
+                                <span data-fc-i18n="design_phantom">Phantom</span>
+                            </div>
+                            <div class="fc-adv-design-card" data-design="brutalist" title="Brutalist Raw">
+                                <div class="design-preview preview-brutalist">00</div>
+                                <span data-fc-i18n="design_brutalist">Brutalist</span>
+                            </div>
+                            <div class="fc-adv-design-card" data-design="matrix" title="Cyber Matrix">
+                                <div class="design-preview preview-matrix">00</div>
+                                <span data-fc-i18n="design_matrix">Matrix</span>
+                            </div>
+                            <div class="fc-adv-design-card" data-design="neon" title="Neon Nights">
+                                <div class="design-preview preview-neon">00</div>
+                                <span data-fc-i18n="design_neon">Neon</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="setting-item checkbox-row">
+                        <label data-fc-i18n="time_bg_auto">Auto Background (TOD)</label>
+                        <input type="checkbox" id="fc-set-timebg">
+                    </div>
+                    <div class="setting-item checkbox-row">
+                        <label data-fc-i18n="binary_clock">Binary Clock Overlay</label>
+                        <input type="checkbox" id="fc-set-binary">
+                    </div>
+                    <div class="setting-item checkbox-row">
+                        <label data-fc-i18n="analog_overlay">Analog Clock Overlay</label>
+                        <input type="checkbox" id="fc-set-analog">
+                    </div>
+                </div>
+
+                <!-- Voice & Audio Group -->
+                <div class="fc-adv-setting-group">
+                    <h3><i class="ph ph-speaker-hifi"></i> <span data-fc-i18n="voice_reading">Voice Reading</span></h3>
+                    <div class="setting-item checkbox-row">
+                        <label data-fc-i18n="voice_read">Read Time Aloud</label>
+                        <input type="checkbox" id="fc-set-voice">
+                    </div>
+                    <div class="setting-item">
+                        <label data-fc-i18n="voice_interval">Interval (minutes)</label>
+                        <input type="number" id="fc-set-voice-interval" value="60" min="1" max="60">
+                    </div>
+                </div>
+
+                <!-- System & Sync Group -->
+                <div class="fc-adv-setting-group">
+                    <h3><i class="ph ph-cpu"></i> <span data-fc-i18n="system_perf">System &amp; Performance</span></h3>
+                    <div class="setting-item checkbox-row">
+                        <label data-fc-i18n="sun_moon">Sun &amp; Moon Info</label>
+                        <input type="checkbox" id="fc-set-sunmoon">
+                    </div>
+                    <div class="setting-item checkbox-row">
+                        <label data-fc-i18n="ntp_sync">Network Time (NTP)</label>
+                        <input type="checkbox" id="fc-set-ntp">
+                    </div>
+                    <div class="setting-item checkbox-row" style="margin-top:1.5rem">
+                        <label data-fc-i18n="anim_speed">Performance Mode</label>
+                        <input type="checkbox" id="fc-set-perf">
+                    </div>
+                    <div class="setting-item">
+                        <label data-fc-i18n="anim_speed">Animation Speed</label>
+                        <input type="range" id="fc-set-anim-speed" min="0.25" max="3" step="0.25" value="1">
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ PANEL: EXTRA ═══ -->
+            <div class="settings-panel" id="panel-extra">
+
+                <!-- Stopwatch Group -->
+                <div class="fc-adv-setting-group">
+                    <h3><i class="ph ph-timer"></i> <span data-fc-i18n="stopwatch">Stopwatch</span></h3>
+                    <div class="setting-item checkbox-row">
+                        <label data-fc-i18n="alarm_enabled">Enable Tool</label>
+                        <input type="checkbox" id="fc-set-stopwatch">
+                    </div>
+                    <div id="fc-adv-panel-stopwatch" class="fc-adv-inline-tool" style="display:none;">
+                        <div class="fc-adv-tool-display" id="fc-adv-sw-display">00:00.00</div>
+                        <div class="fc-adv-tool-btns">
+                            <button class="fc-adv-btn fc-adv-btn-primary" id="fc-adv-sw-start"><i
+                                    class="ph ph-play"></i></button>
+                            <button class="fc-adv-btn fc-adv-btn-secondary" id="fc-adv-sw-lap"><i
+                                    class="ph ph-flag"></i></button>
+                            <button class="fc-adv-btn fc-adv-btn-secondary" id="fc-adv-sw-reset"><i
+                                    class="ph ph-arrow-counter-clockwise"></i></button>
+                        </div>
+                        <div class="fc-adv-sw-laps" id="fc-adv-sw-laps"
+                            style="margin-top:1rem; max-height:150px; overflow-y:auto;"></div>
+                    </div>
+                </div>
+
+                <!-- Countdown Group -->
+                <div class="fc-adv-setting-group">
+                    <h3><i class="ph ph-hourglass"></i> <span data-fc-i18n="countdown">Countdown</span></h3>
+                    <div class="setting-item checkbox-row">
+                        <label data-fc-i18n="alarm_enabled">Enable Tool</label>
+                        <input type="checkbox" id="fc-set-countdown">
+                    </div>
+                    <div id="fc-adv-panel-countdown" class="fc-adv-inline-tool" style="display:none;">
+                        <div style="display:flex; gap:0.5rem; margin-bottom:1rem;">
+                            <input type="number" id="fc-adv-cd-h" placeholder="HH"
+                                data-fc-i18n-placeholder="hours_short" min="0" value="0">
+                            <input type="number" id="fc-adv-cd-m" placeholder="MM"
+                                data-fc-i18n-placeholder="minutes_short" min="0" value="5">
+                            <input type="number" id="fc-adv-cd-s" placeholder="SS"
+                                data-fc-i18n-placeholder="seconds_short" min="0" value="0">
+                        </div>
+                        <div class="fc-adv-tool-display" id="fc-adv-cd-display">00:05:00</div>
+                        <div class="fc-adv-tool-btns">
+                            <button class="fc-adv-btn fc-adv-btn-secondary" id="fc-adv-cd-set"
+                                data-fc-i18n="set_time">SET</button>
+                            <button class="fc-adv-btn fc-adv-btn-primary" id="fc-adv-cd-start"><i
+                                    class="ph ph-play"></i></button>
+                            <button class="fc-adv-btn fc-adv-btn-secondary" id="fc-adv-cd-reset"><i
+                                    class="ph ph-arrow-counter-clockwise"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Multi Timer Group -->
+                <div class="fc-adv-setting-group">
+                    <h3><i class="ph ph-rows"></i> <span data-fc-i18n="multi_timer">Multi-Timers</span></h3>
+                    <div class="setting-item checkbox-row">
+                        <label data-fc-i18n="alarm_enabled">Enable Tool</label>
+                        <input type="checkbox" id="fc-set-multitimer">
+                    </div>
+                    <div id="fc-adv-panel-multitimer" style="display:none;">
+                        <div style="display:flex; gap:0.5rem; flex-direction:column;">
+                            <input type="text" id="fc-adv-mt-name" placeholder="Timer Name"
+                                data-fc-i18n-placeholder="alarm_label">
+                            <div style="display:flex; gap:0.5rem;">
+                                <input type="number" id="fc-adv-mt-min" placeholder="Min" min="1" value="5"
+                                    style="flex:1">
+                                <button class="fc-adv-btn fc-adv-btn-primary" id="fc-adv-mt-add" style="flex:1">
+                                    <i class="ph ph-plus"></i> <span data-fc-i18n="add_timer">Add</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div id="fc-adv-mt-container" class="fc-adv-mt-grid"></div>
+                    </div>
+                </div>
+
+                <!-- Analysis & Machine Group -->
+                <div class="fc-adv-setting-group">
+                    <h3><i class="ph ph-lightning"></i> <span data-fc-i18n="time_machine_sim">Time Machine &amp;
+                            Sim</span>
+                    </h3>
+
+                    <div class="setting-item checkbox-row">
+                        <label data-fc-i18n="time_machine">Time Machine</label>
+                        <input type="checkbox" id="fc-set-timemachine">
+                    </div>
+                    <div class="setting-item">
+                        <label data-fc-i18n="offset_hours">Offset (hours)</label>
+                        <input type="range" id="fc-set-tm-offset" min="-48" max="48" step="1" value="0">
+                        <div id="tm-offset-val" style="text-align:center; font-size:0.8rem; opacity:0.6;">0 hours</div>
+                    </div>
+
+                    <div class="setting-item checkbox-row" style="margin-top:1.5rem">
+                        <label data-fc-i18n="speed_sim">Speed Simulation</label>
+                        <input type="checkbox" id="fc-set-spedsim">
+                    </div>
+                    <div class="setting-item">
+                        <select id="fc-set-speed-mult">
+                            <option value="1" data-fc-i18n="speed_normal">1× (Normal)</option>
+                            <option value="2" data-fc-i18n="speed_fast">2× Fast</option>
+                            <option value="5" data-fc-i18n="speed_very_fast">5× Very Fast</option>
+                            <option value="10" data-fc-i18n="speed_ultra">10× Ultra Fast</option>
+                            <option value="60" data-fc-i18n="speed_sixty">60× (1min/sec)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Calculators Group -->
+                <div class="fc-adv-setting-group">
+                    <h3><i class="ph ph-calc"></i> <span data-fc-i18n="calculators">Calculators</span></h3>
+
+                    <h4 style="font-size:0.7rem; opacity:0.4; margin-bottom:1rem; text-transform:uppercase;"
+                        data-fc-i18n="calculators">Duration
+                        Calculator</h4>
+                    <div class="setting-item">
+                        <label data-fc-i18n="calc_from">From</label>
+                        <input type="datetime-local" id="fc-adv-dc-start">
+                        <label data-fc-i18n="calc_to">To</label>
+                        <input type="datetime-local" id="fc-adv-dc-end">
+                        <button class="fc-adv-btn fc-adv-btn-secondary" id="fc-adv-dc-calc" style="margin-top:0.5rem"
+                            data-fc-i18n="calc_button">Calculate</button>
+                        <div id="fc-adv-dc-result"
+                            style="text-align:center; font-size:1.2rem; margin-top:0.8rem; font-weight:700;">--</div>
+                    </div>
+
+                    <div style="margin-top:2rem;">
+                        <h4 style="font-size:0.7rem; opacity:0.4; margin-bottom:1rem; text-transform:uppercase;"
+                            data-fc-i18n="age_calc">Age
+                            Calculator</h4>
+                        <div class="setting-item checkbox-row">
+                            <label data-fc-i18n="age_calc">Enable Age Calc</label>
+                            <input type="checkbox" id="fc-set-agecalc">
+                        </div>
+                        <div class="setting-item">
+                            <label data-fc-i18n="birth_date">Date of Birth</label>
+                            <input type="datetime-local" id="fc-set-age-dob">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Target Date Group -->
+                <div class="fc-adv-setting-group">
+                    <h3><i class="ph ph-target"></i> <span data-fc-i18n="target_date">Target Event</span></h3>
+                    <div class="setting-item checkbox-row">
+                        <label data-fc-i18n="alarm_enabled">Enable Countdown</label>
+                        <input type="checkbox" id="fc-set-targetdate">
+                    </div>
+                    <div class="setting-item">
+                        <input type="datetime-local" id="fc-set-target-date">
+                    </div>
+                </div>
+            </div>
+        </div><!-- /drawer-content -->
+    </aside>
+
+    <!-- Audio Elements (Hidden) -->
+    <audio id="sfx-flip" src="assets/flip-click.mp3" preload="auto"></audio>
+    <audio id="sfx-alarm" src="assets/alarm.mp3" preload="auto"></audio>
+    <!-- Ambience loops would be loaded dynamically or here -->
+
+    <script src="script.js"></script>
+    <script src="utils.js"></script>
+    <script src="settings.js"></script>
+    <script src="clock.js"></script>
+    <script src="timer.js"></script>
+    <script src="alarm.js"></script>
+    <script src="advanced.js"></script>
+</body>
+
+</html>
