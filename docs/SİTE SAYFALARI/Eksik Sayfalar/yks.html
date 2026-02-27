@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YKS Konu Takip</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Tema Değiştir">
+    <span class="theme-icon">🌙</span>
+  </button>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-brand" onclick="showPage('home')">
+      <span class="nav-logo">YKS</span>
+      <span class="nav-text">Takip</span>
+    </div>
+    <div class="nav-links">
+      <button class="nav-btn active" data-page="home" onclick="showPage('home')">Ana Sayfa</button>
+      <button class="nav-btn" data-page="tyt" onclick="showPage('tyt')">TYT</button>
+      <button class="nav-btn" data-page="ayt" onclick="showPage('ayt')">AYT</button>
+      <button class="nav-btn" data-page="dashboard" onclick="showPage('dashboard')">Dashboard</button>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button onclick="showPage('home'); closeMobileMenu()">Ana Sayfa</button>
+    <button onclick="showPage('tyt'); closeMobileMenu()">TYT</button>
+    <button onclick="showPage('ayt'); closeMobileMenu()">AYT</button>
+    <button onclick="showPage('dashboard'); closeMobileMenu()">Dashboard</button>
+  </div>
+
+  <!-- ======= HOME PAGE ======= -->
+  <div class="page active" id="page-home">
+    <div class="hero">
+      <div class="hero-bg">
+        <div class="blob blob1"></div>
+        <div class="blob blob2"></div>
+        <div class="blob blob3"></div>
+      </div>
+      <div class="hero-content">
+        <div class="hero-badge">🎯 YKS 2025</div>
+        <h1 class="hero-title">
+          <span class="gradient-text">Başarıya</span><br/>
+          Giden Yol
+        </h1>
+        <p class="hero-subtitle">Konularını takip et, ilerleni gör, hedefine ulaş.</p>
+
+        <div class="home-stats" id="homeStats">
+          <div class="stat-card">
+            <span class="stat-val" id="homeTotalTopics">0</span>
+            <span class="stat-lbl">Toplam Konu</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-val" id="homeCompletedTopics">0</span>
+            <span class="stat-lbl">Tamamlanan</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-val" id="homePercent">%0</span>
+            <span class="stat-lbl">Genel İlerleme</span>
+          </div>
+        </div>
+
+        <div class="exam-cards">
+          <div class="exam-card tyt-card" onclick="showPage('tyt')">
+            <div class="exam-card-glow"></div>
+            <div class="exam-card-inner">
+              <div class="exam-icon">📘</div>
+              <h2>TYT</h2>
+              <p>Temel Yeterlilik Testi</p>
+              <div class="exam-progress-wrap">
+                <div class="exam-progress-bar">
+                  <div class="exam-progress-fill" id="tytHomeProgress"></div>
+                </div>
+                <span class="exam-percent" id="tytHomePercent">%0</span>
+              </div>
+              <button class="exam-btn">Başla <span class="arrow">→</span></button>
+            </div>
+          </div>
+
+          <div class="exam-card ayt-card" onclick="showPage('ayt')">
+            <div class="exam-card-glow"></div>
+            <div class="exam-card-inner">
+              <div class="exam-icon">📗</div>
+              <h2>AYT</h2>
+              <p>Alan Yeterlilik Testi</p>
+              <div class="exam-progress-wrap">
+                <div class="exam-progress-bar">
+                  <div class="exam-progress-fill" id="aytHomeProgress"></div>
+                </div>
+                <span class="exam-percent" id="aytHomePercent">%0</span>
+              </div>
+              <button class="exam-btn">Başla <span class="arrow">→</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= TYT PAGE ======= -->
+  <div class="page" id="page-tyt">
+    <div class="subjects-page">
+      <div class="page-header">
+        <button class="back-btn" onclick="showPage('home')">← Geri</button>
+        <div>
+          <h1>📘 TYT <span class="gradient-text">Dersleri</span></h1>
+          <p>Temel Yeterlilik Testi konu takibi</p>
+        </div>
+        <div class="page-overall">
+          <div class="overall-circle" id="tytOverallCircle">
+            <svg viewBox="0 0 36 36">
+              <circle cx="18" cy="18" r="15.9" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="3"/>
+              <circle cx="18" cy="18" r="15.9" fill="none" stroke="url(#tytGrad)" stroke-width="3"
+                stroke-dasharray="0 100" stroke-linecap="round" id="tytOverallArc"
+                transform="rotate(-90 18 18)"/>
+              <defs>
+                <linearGradient id="tytGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#6ee7f7"/>
+                  <stop offset="100%" stop-color="#818cf8"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <span id="tytOverallPct">0%</span>
+          </div>
+          <span>TYT Genel</span>
+        </div>
+      </div>
+      <div class="subjects-container" id="tytSubjects"></div>
+    </div>
+  </div>
+
+  <!-- ======= AYT PAGE ======= -->
+  <div class="page" id="page-ayt">
+    <div class="subjects-page">
+      <div class="page-header">
+        <button class="back-btn" onclick="showPage('home')">← Geri</button>
+        <div>
+          <h1>📗 AYT <span class="gradient-text">Dersleri</span></h1>
+          <p>Alan Yeterlilik Testi konu takibi</p>
+        </div>
+        <div class="page-overall">
+          <div class="overall-circle" id="aytOverallCircle">
+            <svg viewBox="0 0 36 36">
+              <circle cx="18" cy="18" r="15.9" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="3"/>
+              <circle cx="18" cy="18" r="15.9" fill="none" stroke="url(#aytGrad)" stroke-width="3"
+                stroke-dasharray="0 100" stroke-linecap="round" id="aytOverallArc"
+                transform="rotate(-90 18 18)"/>
+              <defs>
+                <linearGradient id="aytGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#a78bfa"/>
+                  <stop offset="100%" stop-color="#f472b6"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <span id="aytOverallPct">0%</span>
+          </div>
+          <span>AYT Genel</span>
+        </div>
+      </div>
+      <div class="subjects-container" id="aytSubjects"></div>
+    </div>
+  </div>
+
+  <!-- ======= DASHBOARD PAGE ======= -->
+  <div class="page" id="page-dashboard">
+    <div class="dashboard-page">
+      <div class="page-header">
+        <button class="back-btn" onclick="showPage('home')">← Geri</button>
+        <div>
+          <h1>📊 <span class="gradient-text">Dashboard</span></h1>
+          <p>Genel ilerleme durumun</p>
+        </div>
+        <button class="reset-btn" onclick="confirmReset()">🗑️ Sıfırla</button>
+      </div>
+
+      <div class="dash-stats">
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon">📚</div>
+          <div class="dash-stat-val" id="dashTotal">0</div>
+          <div class="dash-stat-lbl">Toplam Konu</div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon">✅</div>
+          <div class="dash-stat-val" id="dashCompleted">0</div>
+          <div class="dash-stat-lbl">Tamamlanan</div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon">⏳</div>
+          <div class="dash-stat-val" id="dashRemaining">0</div>
+          <div class="dash-stat-lbl">Kalan</div>
+        </div>
+        <div class="dash-stat-card highlight">
+          <div class="dash-stat-icon">🎯</div>
+          <div class="dash-stat-val" id="dashPercent">%0</div>
+          <div class="dash-stat-lbl">Genel İlerleme</div>
+        </div>
+      </div>
+
+      <div class="dash-charts">
+        <div class="dash-chart-card">
+          <h3>TYT İlerleme</h3>
+          <div class="big-circle-wrap">
+            <svg viewBox="0 0 120 120" class="big-circle">
+              <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="8"/>
+              <circle cx="60" cy="60" r="50" fill="none" stroke="url(#dashTytGrad)" stroke-width="8"
+                stroke-dasharray="0 314" stroke-linecap="round" id="dashTytArc"
+                transform="rotate(-90 60 60)"/>
+              <defs>
+                <linearGradient id="dashTytGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#6ee7f7"/>
+                  <stop offset="100%" stop-color="#818cf8"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <div class="big-circle-label">
+              <span class="big-pct" id="dashTytPct">0%</span>
+              <span>TYT</span>
+            </div>
+          </div>
+        </div>
+        <div class="dash-chart-card">
+          <h3>AYT İlerleme</h3>
+          <div class="big-circle-wrap">
+            <svg viewBox="0 0 120 120" class="big-circle">
+              <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="8"/>
+              <circle cx="60" cy="60" r="50" fill="none" stroke="url(#dashAytGrad)" stroke-width="8"
+                stroke-dasharray="0 314" stroke-linecap="round" id="dashAytArc"
+                transform="rotate(-90 60 60)"/>
+              <defs>
+                <linearGradient id="dashAytGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#a78bfa"/>
+                  <stop offset="100%" stop-color="#f472b6"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <div class="big-circle-label">
+              <span class="big-pct" id="dashAytPct">0%</span>
+              <span>AYT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-subjects-progress" id="dashSubjectsProgress"></div>
+    </div>
+  </div>
+
+  <!-- Topic Modal -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+    <div class="modal" id="topicModal">
+      <button class="modal-close" onclick="closeTopicModal()">✕</button>
+      <h2 class="modal-title" id="modalTitle">Konu Detayı</h2>
+      <div class="modal-stars" id="modalStars"></div>
+      <div class="modal-video" id="modalVideo"></div>
+      <div class="modal-actions">
+        <button class="modal-pdf-btn" id="modalPdfBtn" onclick="openPDF()">📄 PDF Konu Özeti</button>
+        <button class="modal-complete-btn" id="modalCompleteBtn" onclick="toggleCompleteFromModal()">✅ Tamamlandı İşaretle</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Reset Confirm -->
+  <div class="confirm-overlay" id="confirmOverlay">
+    <div class="confirm-box">
+      <h3>⚠️ Emin misin?</h3>
+      <p>Tüm ilerleme verilerini sıfırlamak istediğine emin misin? Bu işlem geri alınamaz.</p>
+      <div class="confirm-btns">
+        <button onclick="cancelReset()">İptal</button>
+        <button class="confirm-danger" onclick="doReset()">Sıfırla</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
